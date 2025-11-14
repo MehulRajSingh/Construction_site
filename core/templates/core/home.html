@@ -1,0 +1,1467 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Construction Site{% endblock %}
+
+{% block meta %}
+<!-- Meta tags for SEO and social media -->
+<meta name="description" content="Construction Site - Premium construction services with 25+ years of excellence. Residential, commercial, and industrial building solutions with unmatched quality.">
+<meta name="keywords" content="construction, building, contractors, construction company, residential construction, commercial construction, industrial construction, renovation">
+<meta property="og:title" content="Construction Site - Premium Building Solutions">
+<meta property="og:description" content="25+ years of excellence in construction. Quality craftsmanship for residential, commercial, and industrial projects.">
+<meta property="og:image" content="{% static 'images/hero-construction.jpg' %}">
+<meta property="og:type" content="website">
+<meta property="og:url" content="{{ request.build_absolute_uri }}">
+<meta name="twitter:card" content="summary_large_image">
+{% endblock %}
+
+{% block extra_css %}
+<!-- Custom CSS styles for this page -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css">
+<link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css">
+<style>
+    /* Hero Section Enhancement */
+    .hero {
+        position: relative;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        background: linear-gradient(135deg, 
+            rgba(255, 140, 0, 0.85) 0%, 
+            rgba(255, 107, 53, 0.8) 50%, 
+            rgba(255, 215, 0, 0.75) 100%),
+            url('https://images.unsplash.com/photo-1541888946425-d81bb19240f5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80') no-repeat center center/cover;
+        overflow: hidden;
+        padding-top: 80px;
+    }
+
+    .hero::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
+        opacity: 0.3;
+    }
+
+    /* Authentication Top Right Corner */
+    .auth-top-right {
+        position: absolute;
+        top: 30px;
+        right: 30px;
+        z-index: 1000;
+        text-align: right;
+    }
+
+    .auth-container {
+        background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(10px);
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        border-radius: 15px;
+        padding: 15px 20px;
+        box-shadow: var(--shadow-lg);
+        transition: all 0.3s ease;
+    }
+
+    .auth-container:hover {
+        background: rgba(255, 255, 255, 0.25);
+        border-color: rgba(255, 255, 255, 0.5);
+        transform: translateY(-2px);
+    }
+
+    .auth-label {
+        color: white;
+        font-weight: 600;
+        margin-bottom: 8px;
+        font-size: 0.9rem;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+    }
+
+    .auth-buttons {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+    }
+
+    .auth-buttons .btn {
+        border-radius: 20px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        box-shadow: var(--shadow-sm);
+    }
+
+    .auth-buttons .btn-light {
+        background: rgba(255, 255, 255, 0.9);
+        color: var(--dark-color);
+        border: 1px solid rgba(255, 255, 255, 0.5);
+    }
+
+    .auth-buttons .btn-light:hover {
+        background: white;
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+    }
+
+    .auth-buttons .btn-outline-light {
+        border: 1px solid rgba(255, 255, 255, 0.7);
+        color: white;
+        background: transparent;
+    }
+
+    .auth-buttons .btn-outline-light:hover {
+        background: white;
+        color: var(--dark-color);
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+    }
+
+    .hero-badge {
+        background: linear-gradient(45deg, var(--primary-yellow), var(--primary-orange));
+        color: var(--dark-color);
+        padding: 12px 24px;
+        border-radius: 50px;
+        font-size: 1rem;
+        font-weight: 600;
+        display: inline-block;
+        margin-bottom: 1.5rem;
+        box-shadow: var(--shadow-lg);
+        border: 2px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .hero-content h1 {
+        font-size: 4rem;
+        font-weight: 800;
+        line-height: 1.1;
+        margin-bottom: 1.5rem;
+        color: white;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .hero-content .lead {
+        font-size: 1.4rem;
+        color: rgba(255, 255, 255, 0.9);
+        margin-bottom: 2rem;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+    }
+
+    @media (max-width: 768px) {
+        .hero-content h1 {
+            font-size: 2.8rem;
+        }
+        
+        .hero-content .lead {
+            font-size: 1.2rem;
+        }
+
+        .auth-top-right {
+            top: 20px;
+            right: 20px;
+            left: 20px;
+            text-align: center;
+        }
+        
+        .auth-container {
+            padding: 12px 15px;
+        }
+        
+        .auth-label {
+            font-size: 0.8rem;
+        }
+        
+        .auth-buttons {
+            justify-content: center;
+        }
+        
+        .auth-buttons .btn {
+            font-size: 0.75rem;
+            padding: 6px 12px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .auth-top-right {
+            top: 15px;
+            right: 15px;
+            left: 15px;
+        }
+        
+        .auth-container {
+            padding: 10px 12px;
+        }
+        
+        .auth-buttons {
+            flex-direction: column;
+            gap: 6px;
+        }
+        
+        .auth-buttons .btn {
+            width: 100%;
+            justify-content: center;
+        }
+        
+        .auth-buttons .btn.me-2 {
+            margin-right: 0 !important;
+        }
+    }
+
+    /* Premium Feature Cards */
+    .premium-feature-card {
+        background: white;
+        padding: 3rem 2rem;
+        border-radius: 20px;
+        box-shadow: var(--shadow-lg);
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        text-align: center;
+        border: 1px solid rgba(255, 140, 0, 0.1);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .premium-feature-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 4px;
+        background: var(--gradient-3);
+        transition: left 0.4s ease;
+    }
+
+    .premium-feature-card:hover::before {
+        left: 0;
+    }
+
+    .premium-feature-card:hover {
+        transform: translateY(-15px);
+        box-shadow: var(--shadow-xl);
+        border-color: var(--primary-yellow);
+    }
+
+    .premium-icon-wrapper {
+        width: 100px;
+        height: 100px;
+        margin: 0 auto 2rem;
+        background: var(--gradient-1);
+        border-radius: 25px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--dark-color);
+        font-size: 2.5rem;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .premium-feature-card:hover .premium-icon-wrapper {
+        background: var(--gradient-3);
+        transform: scale(1.1) rotate(5deg);
+    }
+
+    .premium-icon-wrapper::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+        transform: rotate(45deg);
+        transition: all 0.6s ease;
+    }
+
+    .premium-feature-card:hover .premium-icon-wrapper::before {
+        left: 100%;
+    }
+
+    /* Enhanced Stats Section */
+    .premium-stats {
+        background: var(--gradient-2);
+        color: white;
+        position: relative;
+        overflow: hidden;
+        padding: 6rem 0;
+    }
+
+    .premium-stats::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        opacity: 0.3;
+    }
+
+    .premium-stat-item {
+        position: relative;
+        z-index: 1;
+        padding: 2rem;
+        text-align: center;
+    }
+
+    .premium-stat-icon {
+        font-size: 3rem;
+        margin-bottom: 1.5rem;
+        color: var(--primary-yellow);
+    }
+
+    .premium-stat-number {
+        font-size: 4rem;
+        font-weight: 800;
+        margin-bottom: 0.5rem;
+        color: white;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Premium Project Cards */
+    .premium-project-slide {
+        background: white;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: var(--shadow-lg);
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+    }
+
+    .premium-project-slide:hover {
+        transform: translateY(-10px);
+        box-shadow: var(--shadow-xl);
+    }
+
+    .premium-project-image {
+        position: relative;
+        overflow: hidden;
+        height: 300px;
+    }
+
+    .premium-project-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.6s ease;
+    }
+
+    .premium-project-slide:hover .premium-project-image img {
+        transform: scale(1.1);
+    }
+
+    .premium-project-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, rgba(255, 140, 0, 0.9), rgba(255, 107, 53, 0.9));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: all 0.4s ease;
+    }
+
+    .premium-project-slide:hover .premium-project-overlay {
+        opacity: 1;
+    }
+
+    .project-badge {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        background: var(--gradient-3);
+        color: var(--dark-color);
+        padding: 8px 16px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        z-index: 2;
+    }
+
+    /* Premium CTA Section */
+    .premium-cta {
+        position: relative;
+        padding: 8rem 0;
+        background: linear-gradient(135deg, 
+            rgba(255, 140, 0, 0.9) 0%, 
+            rgba(255, 107, 53, 0.85) 50%, 
+            rgba(255, 215, 0, 0.8) 100%),
+            url('https://images.unsplash.com/photo-1541888946425-d81bb19240f5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80') no-repeat center center/cover;
+        color: white;
+        text-align: center;
+        overflow: hidden;
+    }
+
+    .premium-cta::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
+        opacity: 0.2;
+    }
+
+    .premium-cta-content {
+        position: relative;
+        z-index: 1;
+    }
+
+    .premium-cta h2 {
+        font-size: 3.5rem;
+        font-weight: 800;
+        margin-bottom: 1.5rem;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Enhanced Testimonials */
+    .premium-testimonial {
+        background: white;
+        padding: 3rem;
+        border-radius: 20px;
+        box-shadow: var(--shadow-lg);
+        border-left: 5px solid var(--primary-orange);
+        position: relative;
+        transition: all 0.3s ease;
+    }
+
+    .premium-testimonial:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-xl);
+    }
+
+    .premium-testimonial::before {
+        content: '"';
+        position: absolute;
+        top: 20px;
+        right: 30px;
+        font-size: 5rem;
+        color: rgba(255, 140, 0, 0.1);
+        font-family: 'Georgia', serif;
+        line-height: 1;
+    }
+
+    .premium-rating {
+        color: var(--primary-yellow);
+        margin-bottom: 1.5rem;
+    }
+
+    .premium-testimonial-quote {
+        position: relative;
+        padding-left: 2rem;
+        margin-bottom: 2rem;
+        flex-grow: 1;
+        font-style: italic;
+        color: #555;
+        line-height: 1.7;
+        z-index: 2;
+    }
+
+    .premium-testimonial-author {
+        border-top: 2px solid rgba(255, 140, 0, 0.1);
+        padding-top: 1.5rem;
+    }
+
+    /* Loading Animation Enhancement */
+    .page-loader {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: var(--gradient-1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        transition: opacity 0.5s ease;
+    }
+
+    .premium-loader {
+        width: 80px;
+        height: 80px;
+        border: 6px solid rgba(255, 255, 255, 0.3);
+        border-top: 6px solid var(--primary-orange);
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        position: relative;
+    }
+
+    .premium-loader::before {
+        content: '';
+        position: absolute;
+        top: -6px;
+        left: -6px;
+        right: -6px;
+        bottom: -6px;
+        border: 6px solid transparent;
+        border-top: 6px solid var(--primary-yellow);
+        border-radius: 50%;
+        animation: spin 1.5s linear infinite;
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+
+    /* Responsive Enhancements */
+    @media (max-width: 768px) {
+        .premium-stat-number {
+            font-size: 2.5rem;
+        }
+        
+        .premium-cta h2 {
+            font-size: 2.5rem;
+        }
+        
+        .premium-feature-card {
+            padding: 2rem 1.5rem;
+        }
+    }
+
+    /* Floating Animation */
+    @keyframes float {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-20px); }
+    }
+
+    .floating {
+        animation: float 6s ease-in-out infinite;
+    }
+
+    /* Gradient Text */
+    .gradient-text {
+        background: var(--gradient-3);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Page Loader -->
+<div class="page-loader">
+    <div class="premium-loader"></div>
+</div>
+
+<!-- Scroll Progress Bar -->
+<div class="scroll-progress"></div>
+
+<!-- Back to Top Button -->
+<a href="#" class="back-to-top">
+    <i class="bi bi-arrow-up"></i>
+</a>
+
+<!-- Hero Section -->
+<section class="hero" id="hero">
+    <!-- Authentication Buttons - Top Right Corner -->
+    <div class="auth-top-right">
+        {% if not user.is_authenticated %}
+        <div class="auth-container">
+            <p class="auth-label">Client Access</p>
+            <div class="auth-buttons">
+                <a href="{% url 'login' %}" class="btn btn-light btn-sm me-2">
+                    <i class="bi bi-box-arrow-in-right me-1"></i>Client Login
+                </a>
+                <a href="{% url 'signup' %}" class="btn btn-outline-light btn-sm">
+                    <i class="bi bi-person-plus me-1"></i>New Client Sign Up
+                </a>
+            </div>
+        </div>
+        {% else %}
+        <div class="auth-container">
+            <p class="auth-label">Welcome back, {{ user.username }}!</p>
+            <div class="auth-buttons">
+                <a href="{% url 'projects' %}" class="btn btn-light btn-sm me-2">
+                    <i class="bi bi-folder me-1"></i>My Projects
+                </a>
+                <a href="{% url 'logout' %}" class="btn btn-outline-light btn-sm">
+                    <i class="bi bi-box-arrow-right me-1"></i>Logout
+                </a>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8 hero-content">
+                <span class="hero-badge" data-aos="fade-right" data-aos-delay="200">
+                    <i class="bi bi-award-fill me-2"></i>
+                    10+ Years of Excellence in Construction
+                </span>
+                <h1 class="text-white mt-3" data-aos="fade-up" data-aos-delay="400">
+                    Building Dreams,<br>
+                    <span class="gradient-text">Creating Legacies</span>
+                </h1>
+                <p class="lead text-white mb-4" data-aos="fade-up" data-aos-delay="600">
+                    Premium construction services with unmatched quality, precision, and dedication. 
+                    From concept to completion, we bring your vision to life.
+                </p>
+                <div class="hero-actions" data-aos="fade-up" data-aos-delay="800">
+                    <a href="#contact" class="btn btn-primary-enhanced btn-enhanced btn-lg me-3 mb-3">
+                        <i class="bi bi-chat-dots-fill me-2"></i>Get Free Consultation
+                    </a>
+                    <a href="{% url 'portfolio' %}" class="btn btn-outline-enhanced btn-enhanced btn-lg mb-3">
+                        <i class="bi bi-play-circle-fill me-2"></i>View Our Work
+                    </a>
+                </div>
+                
+                <!-- Trust Indicators -->
+                <div class="trust-indicators mt-5" data-aos="fade-up" data-aos-delay="1000">
+                    <div class="row">
+                        <div class="col-md-3 col-6 text-center">
+                            <h4 class="text-warning mb-1">500+</h4>
+                            <small class="text-white">Projects Completed</small>
+                        </div>
+                        <div class="col-md-3 col-6 text-center">
+                            <h4 class="text-warning mb-1">98%</h4>
+                            <small class="text-white">Client Satisfaction</small>
+                        </div>
+                        <div class="col-md-3 col-6 text-center">
+                            <h4 class="text-warning mb-1">10+</h4>
+                            <small class="text-white">Years Experience</small>
+                        </div>
+                        <div class="col-md-3 col-6 text-center">
+                            <h4 class="text-warning mb-1">50+</h4>
+                            <small class="text-white">Expert Team</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Scroll Indicator -->
+    <div class="scroll-indicator" data-aos="fade-up" data-aos-delay="1200">
+        <a href="#services" class="text-white d-inline-block mt-5 floating">
+            <i class="bi bi-chevron-down fs-1"></i>
+        </a>
+    </div>
+</section>
+
+<!-- Services Section -->
+<section id="services" class="py-5 bg-light">
+    <div class="container">
+        <div class="text-center mb-5" data-aos="fade-up">
+            <span class="badge bg-primary-subtle text-primary mb-2 px-3 py-2">OUR EXPERTISE</span>
+            <h2 class="fw-bold display-5">Premium Construction Services</h2>
+            <p class="lead text-muted">Comprehensive solutions tailored to your unique needs</p>
+        </div>
+        <div class="row g-4">
+            <!-- Service 1 -->
+            <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="100">
+                <div class="premium-feature-card h-100">
+                    <div class="premium-icon-wrapper">
+                        <i class="bi bi-house-door"></i>
+                    </div>
+                    <h5 class="fw-bold mb-3">Residential Construction</h5>
+                    <p class="text-muted">Custom home building and residential projects with personalized designs and premium materials.</p>
+                    <div class="mt-4">
+                        <span class="badge bg-warning text-dark">From $150,000</span>
+                    </div>
+                    <div class="mt-3">
+                        <a href="/services/" class="btn btn-outline-primary btn-sm">View Details</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Service 2 -->
+            <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="200">
+                <div class="premium-feature-card h-100">
+                    <div class="premium-icon-wrapper">
+                        <i class="bi bi-building"></i>
+                    </div>
+                    <h5 class="fw-bold mb-3">Commercial Construction</h5>
+                    <p class="text-muted">Office buildings, retail spaces, and commercial complexes with modern architecture.</p>
+                    <div class="mt-4">
+                        <span class="badge bg-warning text-dark">From $500,000</span>
+                    </div>
+                    <div class="mt-3">
+                        <a href="/services/" class="btn btn-outline-primary btn-sm">View Details</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Service 3 -->
+            <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="300">
+                <div class="premium-feature-card h-100">
+                    <div class="premium-icon-wrapper">
+                        <i class="bi bi-gear"></i>
+                    </div>
+                    <h5 class="fw-bold mb-3">Industrial Construction</h5>
+                    <p class="text-muted">Warehouses, factories, and industrial facilities built for efficiency and durability.</p>
+                    <div class="mt-4">
+                        <span class="badge bg-warning text-dark">From $1M</span>
+                    </div>
+                    <div class="mt-3">
+                        <a href="/services/" class="btn btn-outline-primary btn-sm">View Details</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Service 4 -->
+            <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="400">
+                <div class="premium-feature-card h-100">
+                    <div class="premium-icon-wrapper">
+                        <i class="bi bi-tools"></i>
+                    </div>
+                    <h5 class="fw-bold mb-3">Renovation & Remodeling</h5>
+                    <p class="text-muted">Transform your existing space with our expert renovation services.</p>
+                    <div class="mt-4">
+                        <span class="badge bg-warning text-dark">From $25,000</span>
+                    </div>
+                    <div class="mt-3">
+            
+            
+                        <a href="/services/" class="btn btn-outline-primary btn-sm">View Details</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- CTA Button -->
+        <div class="text-center mt-5" data-aos="fade-up">
+            <a href="/services/" class="btn btn-primary btn-lg">
+                <i class="bi bi-arrow-right me-2"></i>Explore All Services
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Stats Section -->
+<section class="premium-stats">
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-6 col-lg-3 mb-4 mb-lg-0" data-aos="zoom-in" data-aos-delay="100">
+                <div class="premium-stat-item">
+                    <i class="bi bi-building premium-stat-icon"></i>
+                    <div class="premium-stat-number" data-count="500">0</div>
+                    <h6 class="stat-label">Projects Completed</h6>
+                </div>
+            </div>
+            <div class="col-6 col-lg-3 mb-4 mb-lg-0" data-aos="zoom-in" data-aos-delay="200">
+                <div class="premium-stat-item">
+                    <i class="bi bi-award premium-stat-icon"></i>
+                    <div class="premium-stat-number" data-count="10">0</div>
+                    <h6 class="stat-label">Years Experience</h6>
+                </div>
+            </div>
+            <div class="col-6 col-lg-3 mb-4 mb-lg-0" data-aos="zoom-in" data-aos-delay="300">
+                <div class="premium-stat-item">
+                    <i class="bi bi-people premium-stat-icon"></i>
+                    <div class="premium-stat-number" data-count="50">0</div>
+                    <h6 class="stat-label">Expert Team</h6>
+                </div>
+            </div>
+            <div class="col-6 col-lg-3 mb-4 mb-lg-0" data-aos="zoom-in" data-aos-delay="400">
+                <div class="premium-stat-item">
+                    <i class="bi bi-heart premium-stat-icon"></i>
+                    <div class="premium-stat-number" data-count="98">0</div>
+                    <h6 class="stat-label">Client Satisfaction</h6>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Featured Projects Section -->
+<section id="projects" class="py-5 bg-light">
+    <div class="container">
+        <div class="text-center mb-5" data-aos="fade-up">
+            <span class="badge bg-primary-subtle text-primary mb-2 px-3 py-2">FEATURED WORK</span>
+            <h2 class="fw-bold display-5">Our Masterpiece Projects</h2>
+            <p class="lead text-muted">Showcasing excellence in construction and design</p>
+        </div>
+
+        <div class="swiper projectSwiper" data-aos="fade-up" data-aos-delay="200">
+            <div class="swiper-wrapper">
+                <!-- Project 1 -->
+                <div class="swiper-slide">
+                    <div class="premium-project-slide">
+                        <div class="premium-project-image">
+                            <img src="https://images.pexels.com/photos/13752348/pexels-photo-13752348.jpeg" 
+                                 alt="Modern Luxury Villa" loading="lazy">
+                            <div class="project-badge">Residential</div>
+                            <div class="premium-project-overlay">
+                                <div class="text-center text-white">
+                                    <a href="https://images.pexels.com/photos/13752348/pexels-photo-13752348.jpeg" 
+                                       data-fancybox="gallery" data-caption="Modern Luxury Villa">
+                                        <i class="bi bi-eye-fill fs-1 mb-3"></i>
+                                    </a>
+                                    <p class="mb-0">View Project</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-content p-4">
+                            <span class="project-category text-primary">Luxury Residential</span>
+                            <h5 class="project-title fw-bold">Modern Luxury Villa</h5>
+                            <div class="project-meta">
+                                <i class="bi bi-geo-alt-fill me-1"></i>Beverly Hills, CA
+                                <span class="mx-2">•</span>
+                                <i class="bi bi-building me-1"></i>5,200 sq ft
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 2 -->
+                <div class="swiper-slide">
+                    <div class="premium-project-slide">
+                        <div class="premium-project-image">
+                            <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80" 
+                                 alt="Commercial Office Tower" loading="lazy">
+                            <div class="project-badge">Commercial</div>
+                            <div class="premium-project-overlay">
+                                <div class="text-center text-white">
+                                    <a href="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80" 
+                                       data-fancybox="gallery" data-caption="Commercial Office Tower">
+                                        <i class="bi bi-eye-fill fs-1 mb-3"></i>
+                                    </a>
+                                    <p class="mb-0">View Project</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-content p-4">
+                            <span class="project-category text-primary">Commercial</span>
+                            <h5 class="project-title fw-bold">Downtown Office Tower</h5>
+                            <div class="project-meta">
+                                <i class="bi bi-geo-alt-fill me-1"></i>New York, NY
+                                <span class="mx-2">•</span>
+                                <i class="bi bi-building me-1"></i>25,000 sq ft
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 3 -->
+                <div class="swiper-slide">
+                    <div class="premium-project-slide">
+                        <div class="premium-project-image">
+                            <img src="https://as2.ftcdn.net/v2/jpg/00/16/62/81/1000_F_16628163_ivf3BAhkP09o2WMOFzrV2oX7yHsIqgmO.jpg" 
+                                 alt="Industrial Complex" loading="lazy">
+                            <div class="project-badge">Industrial</div>
+                            <div class="premium-project-overlay">
+                                <div class="text-center text-white">
+                                    <a href="https://as2.ftcdn.net/v2/jpg/00/16/62/81/1000_F_16628163_ivf3BAhkP09o2WMOFzrV2oX7yHsIqgmO.jpg" 
+                                       data-fancybox="gallery" data-caption="Manfacturing Facility">
+                                        <i class="bi bi-eye-fill fs-1 mb-3"></i>
+                                    </a>
+                                    <p class="mb-0">View Project</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-content p-4">
+                            <span class="project-category text-primary">Industrial</span>
+                            <h5 class="project-title fw-bold">Manufacturing Facility</h5>
+                            <div class="project-meta">
+                                <i class="bi bi-geo-alt-fill me-1"></i>Houston, TX
+                                <span class="mx-2">•</span>
+                                <i class="bi bi-building me-1"></i>50,000 sq ft
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="swiper-pagination mt-4"></div>
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+        </div>
+
+        <div class="text-center mt-5" data-aos="fade-up">
+            <a href="{% url 'portfolio' %}" class="btn btn-primary btn-lg">
+                <i class="bi bi-grid-3x3-gap-fill me-2"></i>View Full Portfolio
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Why Choose Us Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 mb-5 mb-lg-0" data-aos="fade-right">
+                <span class="badge bg-primary-subtle text-primary mb-2 px-3 py-2">WHY CHOOSE US</span>
+                <h2 class="fw-bold display-5 mb-4">Building Excellence Since 2015</h2>
+                <p class="lead text-muted mb-4">
+                    With over one decades of experience, we've perfected the art of construction, 
+                    delivering projects that stand the test of time while exceeding client expectations.
+                </p>
+                
+                <div class="row">
+                    <div class="col-md-6 mb-4">
+                        <div class="d-flex">
+                            <div class="me-3">
+                                <i class="bi bi-shield-check text-primary fs-2"></i>
+                            </div>
+                            <div>
+                                <h5 class="fw-bold">Quality Assurance</h5>
+                                <p class="text-muted mb-0">Rigorous quality control at every stage</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="d-flex">
+                            <div class="me-3">
+                                <i class="bi bi-clock text-primary fs-2"></i>
+                            </div>
+                            <div>
+                                <h5 class="fw-bold">On-Time Delivery</h5>
+                                <p class="text-muted mb-0">97% of projects completed on schedule</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="d-flex">
+                            <div class="me-3">
+                                <i class="bi bi-currency-dollar text-primary fs-2"></i>
+                            </div>
+                            <div>
+                                <h5 class="fw-bold">Transparent Pricing</h5>
+                                <p class="text-muted mb-0">No hidden costs, clear budgets</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="d-flex">
+                            <div class="me-3">
+                                <i class="bi bi-headset text-primary fs-2"></i>
+                            </div>
+                            <div>
+                                <h5 class="fw-bold">24/7 Support</h5>
+                                <p class="text-muted mb-0">Always available for our clients</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-6" data-aos="fade-left">
+                <div class="position-relative">
+                    <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80" 
+                         alt="Construction Team" class="img-fluid rounded-3 shadow-lg">
+                    <div class="position-absolute bottom-0 start-0 m-4">
+                        <div class="bg-white rounded-3 p-3 shadow">
+                            <h4 class="fw-bold text-primary mb-0">10+ Years</h4>
+                            <p class="text-muted mb-0">of Excellence</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="text-center mb-5" data-aos="fade-up">
+            <span class="badge bg-primary-subtle text-primary mb-2 px-3 py-2">CLIENT TESTIMONIALS</span>
+            <h2 class="fw-bold display-5">What Our Clients Say</h2>
+            <p class="lead text-muted">Hear from our satisfied customers</p>
+        </div>
+        
+        <div class="testimonial-swiper swiper" data-aos="fade-up">
+            <div class="swiper-wrapper">
+                <!-- Testimonial 1 -->
+                <div class="swiper-slide">
+                    <div class="premium-testimonial h-100">
+                        <div class="premium-rating">
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                        </div>
+                        <p class="premium-testimonial-quote">
+                            "Construction Site transformed our vision into reality. Their attention to detail and 
+                            professionalism exceeded our expectations. The project was completed on time and within budget."
+                        </p>
+                        <div class="premium-testimonial-author">
+                            <div class="d-flex align-items-center">
+                                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" 
+                                     class="rounded-circle me-3" width="60" height="60" alt="Michael Chen">
+                                <div>
+                                    <h6 class="mb-0 fw-bold">Michael Chen</h6>
+                                    <small class="text-muted">Homeowner, Beverly Hills</small>
+                                    <br><small class="text-primary">Luxury Villa Project</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 2 -->
+                <div class="swiper-slide">
+                    <div class="premium-testimonial h-100">
+                        <div class="premium-rating">
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                        </div>
+                        <p class="premium-testimonial-quote">
+                            "Working with Construction Site on our commercial office tower was seamless. Their team 
+                            handled every challenge professionally and delivered a stunning result that our tenants love."
+                        </p>
+                        <div class="premium-testimonial-author">
+                            <div class="d-flex align-items-center">
+                                <img src="https://images.pexels.com/photos/1239288/pexels-photo-1239288.jpeg?auto=compress&cs=tinysrgb&w=400" 
+                                     class="rounded-circle me-3" width="60" height="60" alt="Sarah Johnson">
+                                <div>
+                                    <h6 class="mb-0 fw-bold">Sarah Johnson</h6>
+                                    <small class="text-muted">CEO, TechCorp Inc.</small>
+                                    <br><small class="text-primary">Office Tower Project</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 3 -->
+                <div class="swiper-slide">
+                    <div class="premium-testimonial h-100">
+                        <div class="premium-rating">
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                        </div>
+                        <p class="premium-testimonial-quote">
+                            "The industrial facility they built for us has improved our operational efficiency by 40%. 
+                            Their expertise in industrial construction is unmatched. Highly recommended!"
+                        </p>
+                        <div class="premium-testimonial-author">
+                            <div class="d-flex align-items-center">
+                                <img src="https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=400" 
+                                     class="rounded-circle me-3" width="60" height="60" alt="Robert Martinez">
+                                <div>
+                                    <h6 class="mb-0 fw-bold">Robert Martinez</h6>
+                                    <small class="text-muted">Operations Director, Manufacturing Co.</small>
+                                    <br><small class="text-primary">Industrial Facility Project</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="swiper-pagination mt-4"></div>
+        </div>
+    </div>
+</section>
+
+<!-- Premium CTA Section -->
+<section class="premium-cta">
+    <div class="container premium-cta-content">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center" data-aos="zoom-in">
+                <h2 class="text-white mb-4">Ready to Start Your Construction Project?</h2>
+                <p class="lead text-white mb-5">
+                    Let's build something extraordinary together. Get a free consultation and quote for your dream project.
+                </p>
+                <div class="cta-buttons">
+                    <a href="#contact" class="btn btn-light btn-lg btn-enhanced me-3 mb-3">
+                        <i class="bi bi-calendar-check me-2"></i>Schedule Consultation
+                    </a>
+                    <a href="tel:+917004020921" class="btn btn-outline-light btn-lg btn-enhanced mb-3">
+                        <i class="bi bi-telephone-fill me-2"></i>Call Now
+                    </a>
+                </div>
+                <div class="contact-info mt-4">
+                    <small class="text-white-50">
+                        <i class="bi bi-lightning-fill me-1"></i>Response within 2 hours • 
+                        <i class="bi bi-shield-check me-1"></i>Free quote & consultation
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Section -->
+<section id="contact" class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 mb-5 mb-lg-0" data-aos="fade-right">
+                <h3 class="fw-bold mb-4">Start Your Project</h3>
+                <p class="text-muted mb-4">
+                    Ready to bring your vision to life? Contact us for a free consultation and detailed quote. 
+                    Our experts are here to guide you through every step.
+                </p>
+                
+                <div class="contact-info">
+                    <div class="d-flex align-items-center mb-4">
+                        <div class="contact-icon me-3">
+                            <i class="bi bi-geo-alt-fill fs-4 text-primary"></i>
+                        </div>
+                        <div>
+                            <h6 class="mb-0">Office Address</h6>
+                            <p class="text-muted mb-0">123 Construction Avenue, Building City, BC 12345</p>
+                        </div>
+                    </div>
+                    
+                    <div class="d-flex align-items-center mb-4">
+                        <div class="contact-icon me-3">
+                            <i class="bi bi-telephone-fill fs-4 text-primary"></i>
+                        </div>
+                        <div>
+                            <h6 class="mb-0">Call Us</h6>
+                            <p class="text-muted mb-0">+91 70040 20921</p>
+                        </div>
+                    </div>
+                    
+                    <div class="d-flex align-items-center mb-4">
+                        <div class="contact-icon me-3">
+                            <i class="bi bi-envelope-fill fs-4 text-primary"></i>
+                        </div>
+                        <div>
+                            <h6 class="mb-0">Email Us</h6>
+                            <p class="text-muted mb-0">mehulrajsingh9145@gmail.com</p>
+                        </div>
+                    </div>
+                    
+                    <div class="d-flex align-items-center mb-4">
+                        <div class="contact-icon me-3">
+                            <i class="bi bi-clock-fill fs-4 text-primary"></i>
+                        </div>
+                        <div>
+                            <h6 class="mb-0">Working Hours</h6>
+                            <p class="text-muted mb-0">Mon - Sat: 8:00 AM - 6:00 PM</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="social-links mt-5">
+                    <h6 class="mb-3">Follow Our Work</h6>
+                    <div class="d-flex gap-3">
+                        <a href="#" class="social-icon"><i class="bi bi-facebook"></i></a>
+                        <a href="#" class="social-icon"><i class="bi bi-twitter"></i></a>
+                        <a href="#" class="social-icon"><i class="bi bi-instagram"></i></a>
+                        <a href="#" class="social-icon"><i class="bi bi-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-8">
+                <div class="contact-form" data-aos="fade-left">
+                    <div class="card-body p-5">
+                        <h3 class="fw-bold mb-2 text-center">Request Your Free Quote</h3>
+                        <p class="text-muted text-center mb-5">Complete the form below and we'll contact you within 2 hours</p>
+                        
+                        <form method="POST" action="{% url 'home' %}#contact" id="contactForm">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-md-6 mb-4">
+                                    <label class="form-label fw-semibold">Your Name *</label>
+                                    <input type="text" class="form-control form-control-lg" name="name" placeholder="John Doe" required>
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <label class="form-label fw-semibold">Email Address *</label>
+                                    <input type="email" class="form-control form-control-lg" name="email" placeholder="john@example.com" required>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 mb-4">
+                                    <label class="form-label fw-semibold">Phone Number *</label>
+                                    <input type="tel" class="form-control form-control-lg" name="phone" placeholder="+91 98765 43210" required>
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <label class="form-label fw-semibold">Project Type *</label>
+                                    <select class="form-select form-select-lg" name="project_type" required>
+                                        <option value="" selected disabled>Select Project Type</option>
+                                        <option value="residential">Residential Construction</option>
+                                        <option value="commercial">Commercial Construction</option>
+                                        <option value="industrial">Industrial Construction</option>
+                                        <option value="renovation">Renovation & Remodeling</option>
+                                        <option value="consultation">Consultation Only</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="mb-4">
+                                <label class="form-label fw-semibold">Project Location</label>
+                                <input type="text" class="form-control form-control-lg" name="location" placeholder="City, State">
+                            </div>
+                            <div class="mb-4">
+                                <label class="form-label fw-semibold">Estimated Budget</label>
+                                <select class="form-select form-select-lg" name="budget">
+                                    <option value="" selected disabled>Select Budget Range</option>
+                                    <option value="25k-50k">$25,000 - $50,000</option>
+                                    <option value="50k-100k">$50,000 - $100,000</option>
+                                    <option value="100k-250k">$100,000 - $250,000</option>
+                                    <option value="250k-500k">$250,000 - $500,000</option>
+                                    <option value="500k+">$500,000+</option>
+                                </select>
+                            </div>
+                            <div class="mb-4">
+                                <label class="form-label fw-semibold">Project Details *</label>
+                                <textarea class="form-control form-control-lg" name="message" rows="5" placeholder="Tell us about your project vision, requirements, timeline, and any specific needs..." required></textarea>
+                            </div>
+                            <div class="d-grid">
+                                <button class="btn btn-submit btn-lg py-3" type="submit">
+                                    <i class="bi bi-send-fill me-2"></i>Get Free Quote
+                                </button>
+                            </div>
+                            <div class="text-center mt-3">
+                                <small class="text-muted">
+                                    <i class="bi bi-shield-check me-1"></i>Your information is secure and will never be shared with third parties
+                                </small>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<!-- External Libraries -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+
+<script>
+    // Initialize page loader
+    window.addEventListener('load', () => {
+        const pageLoader = document.querySelector('.page-loader');
+        gsap.to(pageLoader, {
+            opacity: 0,
+            duration: 0.8,
+            delay: 1,
+            onComplete: () => {
+                pageLoader.style.display = 'none';
+            }
+        });
+    });
+
+    // Initialize AOS
+    AOS.init({
+        duration: 1000,
+        once: true,
+        easing: 'ease-in-out',
+        offset: 100
+    });
+
+    // Initialize Swiper for projects
+    const projectSwiper = new Swiper(".projectSwiper", {
+        slidesPerView: 1,
+        spaceBetween: 30,
+        loop: true,
+        autoplay: {
+            delay: 5000,
+            disableOnInteraction: false,
+        },
+        pagination: {
+            el: ".swiper-pagination",
+            clickable: true,
+        },
+        navigation: {
+            nextEl: ".swiper-button-next",
+            prevEl: ".swiper-button-prev",
+        },
+        breakpoints: {
+            640: {
+                slidesPerView: 1,
+            },
+            768: {
+                slidesPerView: 2,
+            },
+            1024: {
+                slidesPerView: 3,
+            },
+        },
+    });
+
+    // Initialize Swiper for testimonials
+    const testimonialSwiper = new Swiper(".testimonial-swiper", {
+        slidesPerView: 1,
+        spaceBetween: 30,
+        loop: true,
+        autoplay: {
+            delay: 6000,
+            disableOnInteraction: false,
+        },
+        pagination: {
+            el: ".swiper-pagination",
+            clickable: true,
+        },
+        breakpoints: {
+            768: {
+                slidesPerView: 2,
+            },
+            992: {
+                slidesPerView: 3,
+            },
+        },
+    });
+
+    // Initialize Fancybox
+    Fancybox.bind("[data-fancybox]", {
+        Thumbs: false,
+        Toolbar: true,
+        closeButton: "top",
+    });
+
+    // Stats counter with GSAP
+    const counters = document.querySelectorAll(".premium-stat-number");
+    
+    if (counters.length > 0) {
+        counters.forEach(counter => {
+            const target = parseInt(counter.getAttribute('data-count'));
+            const suffix = counter.getAttribute('data-suffix') || '';
+            
+            gsap.to(counter, {
+                scrollTrigger: {
+                    trigger: ".premium-stats",
+                    start: "top 80%",
+                    toggleActions: "play none none none"
+                },
+                innerText: target + suffix,
+                snap: { innerText: 1 },
+                duration: 2.5,
+                ease: "power2.out",
+                onUpdate: function() {
+                    const value = Math.floor(parseInt(this.targets()[0].innerText));
+                    this.targets()[0].innerText = value + suffix;
+                }
+            });
+        });
+    }
+
+    // Scroll progress bar
+    window.addEventListener('scroll', () => {
+        const scrollProgress = document.querySelector('.scroll-progress');
+        const scrollTop = window.scrollY;
+        const docHeight = document.body.offsetHeight;
+        const winHeight = window.innerHeight;
+        const scrollPercent = (scrollTop / (docHeight - winHeight)) * 100;
+        scrollProgress.style.width = `${scrollPercent}%`;
+    });
+
+    // Back to top button
+    const backToTopButton = document.querySelector('.back-to-top');
+    
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 300) {
+            backToTopButton.classList.add('show');
+        } else {
+            backToTopButton.classList.remove('show');
+        }
+    });
+    
+    backToTopButton.addEventListener('click', (e) => {
+        e.preventDefault();
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+
+    // Form validation and submission
+    const contactForm = document.getElementById('contactForm');
+    
+    if (contactForm) {
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Simple validation
+            const requiredFields = contactForm.querySelectorAll('[required]');
+            let isValid = true;
+            
+            requiredFields.forEach(field => {
+                if (!field.value.trim()) {
+                    field.classList.add('is-invalid');
+                    isValid = false;
+                } else {
+                    field.classList.remove('is-invalid');
+                }
+            });
+            
+            if (isValid) {
+                // Show loading state
+                const submitButton = contactForm.querySelector('button[type="submit"]');
+                const originalText = submitButton.innerHTML;
+                submitButton.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Processing...';
+                submitButton.disabled = true;
+                
+                setTimeout(() => {
+                    // Show success message
+                    const successMessage = document.createElement('div');
+                    successMessage.className = 'alert alert-success mt-3';
+                    successMessage.innerHTML = '<i class="bi bi-check-circle-fill me-2"></i> Thank you! Your quote request has been submitted. We will contact you within 2 hours.';
+                    contactForm.appendChild(successMessage);
+                    
+                    contactForm.reset();
+
+                    submitButton.innerHTML = originalText;
+                    submitButton.disabled = false;
+                    
+                    // Remove success message after 5 seconds
+                    setTimeout(() => {
+                        successMessage.remove();
+                    }, 5000);
+                }, 2000);
+            }
+        });
+    }
+
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            
+            const targetId = this.getAttribute('href');
+            if (targetId === '#') return;
+            
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+                targetElement.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+
+    // Add floating animation to elements
+    gsap.to('.floating', {
+        y: -20,
+        duration: 2,
+        repeat: -1,
+        yoyo: true,
+        ease: "power1.inOut"
+    });
+
+    // Enhanced hover effects for premium cards
+    document.querySelectorAll('.premium-feature-card').forEach(card => {
+        card.addEventListener('mouseenter', function() {
+            gsap.to(this, {
+                y: -15,
+                duration: 0.3,
+                ease: "power2.out"
+            });
+        });
+        
+        card.addEventListener('mouseleave', function() {
+            gsap.to(this, {
+                y: 0,
+                duration: 0.3,
+                ease: "power2.out"
+            });
+        });
+    });
+</script>
+{% endblock %}

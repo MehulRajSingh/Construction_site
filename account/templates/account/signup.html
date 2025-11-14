@@ -1,0 +1,645 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Client Signup Construction Site {% endblock %}
+
+{% block meta %}
+<meta name="description" content="Create your Construction Site client account. Get access to project tracking, communication tools, and real-time updates.">
+<meta name="keywords" content="construction signup, client registration, project management, construction projects">
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Premium Ultra Compact Wide Signup Section */
+    .premium-signup-section {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: 
+            radial-gradient(circle at 20% 80%, rgba(255, 215, 0, 0.15) 0%, transparent 50%),
+            radial-gradient(circle at 80% 20%, rgba(255, 107, 53, 0.15) 0%, transparent 50%),
+            radial-gradient(circle at 40% 40%, rgba(255, 140, 0, 0.1) 0%, transparent 50%),
+            linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+        padding: 20px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .premium-signup-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: 
+            url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"),
+            linear-gradient(135deg, rgba(255, 140, 0, 0.7) 0%, rgba(255, 107, 53, 0.8) 50%, rgba(255, 215, 0, 0.6) 100%);
+    }
+
+    .premium-signup-container {
+        max-width: 500px;
+        width: 100%;
+        margin: 0 auto;
+        position: relative;
+        z-index: 2;
+    }
+
+    .premium-signup-card {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(20px);
+        border-radius: 16px;
+        padding: 1.5rem 1.8rem;
+        box-shadow: 
+            0 10px 40px rgba(0, 0, 0, 0.15),
+            0 0 0 1px rgba(255, 255, 255, 0.2),
+            inset 0 0 0 1px rgba(255, 255, 255, 0.4);
+        position: relative;
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .premium-signup-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        background: linear-gradient(90deg, #FF8C00, #FF6B35, #FFD700, #FF8C00);
+        background-size: 200% 100%;
+        animation: shimmer 3s linear infinite;
+    }
+
+    .signup-header {
+        text-align: center;
+        margin-bottom: 1.2rem;
+        position: relative;
+        z-index: 3;
+    }
+
+    .signup-icon {
+        width: 45px;
+        height: 45px;
+        margin: 0 auto 0.6rem;
+        background: linear-gradient(135deg, #FF8C00, #FF6B35);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        color: white;
+        box-shadow: 
+            0 4px 15px rgba(255, 140, 0, 0.4),
+            inset 0 1px 1px rgba(255, 255, 255, 0.3);
+    }
+
+    .signup-header h2 {
+        color: #1a365d;
+        font-weight: 800;
+        margin-bottom: 0.2rem;
+        font-size: 1.3rem;
+        letter-spacing: -0.5px;
+    }
+
+    .signup-header p {
+        color: #718096;
+        font-size: 0.8rem;
+        margin-bottom: 0;
+        font-weight: 500;
+    }
+
+    /* Form Grid Layout */
+    .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.8rem;
+        margin-bottom: 0.8rem;
+    }
+
+    .form-full-width {
+        grid-column: 1 / -1;
+    }
+
+    /* Form Styles */
+    .premium-form-group {
+        margin-bottom: 0.7rem;
+        position: relative;
+        z-index: 3;
+    }
+
+    .premium-form-label {
+        display: block;
+        margin-bottom: 0.3rem;
+        color: #2d3748;
+        font-weight: 600;
+        font-size: 0.75rem;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+    }
+
+    .premium-form-control {
+        width: 100%;
+        padding: 8px 12px;
+        border: 1.5px solid #e2e8f0;
+        border-radius: 8px;
+        background: rgba(248, 250, 252, 0.8);
+        font-size: 0.82rem;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        color: #2d3748;
+        font-weight: 500;
+    }
+
+    .premium-form-control:focus {
+        outline: none;
+        border-color: #FF8C00;
+        background: white;
+        box-shadow: 
+            0 0 0 3px rgba(255, 140, 0, 0.15),
+            0 2px 8px rgba(255, 140, 0, 0.1);
+    }
+
+    .form-icon {
+        position: absolute;
+        right: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #FF8C00;
+        font-size: 0.9rem;
+        z-index: 4;
+    }
+
+    .password-strength {
+        margin-top: 0.2rem;
+        font-size: 0.7rem;
+        font-weight: 500;
+    }
+
+    .strength-weak { color: #e53e3e; }
+    .strength-medium { color: #dd6b20; }
+    .strength-strong { color: #38a169; }
+
+    /* Signup Button */
+    .premium-signup-btn {
+        width: 100%;
+        padding: 10px;
+        background: linear-gradient(135deg, #FF8C00, #FF6B35);
+        border: none;
+        border-radius: 8px;
+        color: white;
+        font-weight: 700;
+        font-size: 0.85rem;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        margin-top: 0.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+        position: relative;
+        overflow: hidden;
+        z-index: 3;
+        letter-spacing: 0.5px;
+        box-shadow: 
+            0 4px 12px rgba(255, 140, 0, 0.4),
+            inset 0 1px 1px rgba(255, 255, 255, 0.2);
+    }
+
+    .premium-signup-btn:hover {
+        transform: translateY(-1px);
+        box-shadow: 
+            0 6px 15px rgba(255, 140, 0, 0.5),
+            inset 0 1px 1px rgba(255, 255, 255, 0.3);
+        background: linear-gradient(135deg, #FF6B35, #FF8C00);
+    }
+
+    /* Alert Styles */
+    .premium-alert {
+        padding: 0.6rem 0.8rem;
+        border-radius: 8px;
+        margin-bottom: 0.8rem;
+        font-weight: 600;
+        font-size: 0.75rem;
+        position: relative;
+        z-index: 3;
+        border-left: 4px solid;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    }
+
+    .premium-alert-danger {
+        background: linear-gradient(135deg, #ffe6e6, #ffcccc);
+        color: #d63031;
+        border-left-color: #d63031;
+    }
+
+    .premium-alert-success {
+        background: linear-gradient(135deg, #e6ffe6, #ccffcc);
+        color: #38a169;
+        border-left-color: #38a169;
+    }
+
+    /* Terms Checkbox */
+    .terms-group {
+        margin: 0.8rem 0 0.4rem;
+        position: relative;
+        z-index: 3;
+    }
+
+    .terms-checkbox {
+        display: flex;
+        align-items: flex-start;
+        gap: 6px;
+        font-size: 0.72rem;
+        color: #4a5568;
+        font-weight: 500;
+        line-height: 1.3;
+    }
+
+    .terms-checkbox input[type="checkbox"] {
+        margin-top: 0.15rem;
+        accent-color: #FF8C00;
+        transform: scale(1);
+    }
+
+    /* Compact Benefits List */
+    .benefits-list {
+        margin-top: 1rem;
+        padding: 0.8rem;
+        background: linear-gradient(135deg, rgba(255, 140, 0, 0.05), rgba(255, 107, 53, 0.05));
+        border-radius: 10px;
+        border: 1px solid rgba(255, 140, 0, 0.1);
+        position: relative;
+        z-index: 3;
+        backdrop-filter: blur(10px);
+    }
+
+    .benefits-list::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 3px;
+        height: 100%;
+        background: linear-gradient(to bottom, #FF8C00, #FF6B35);
+        border-radius: 3px 0 0 3px;
+    }
+
+    .benefits-list h6 {
+        color: #1a365d;
+        margin-bottom: 0.5rem;
+        font-weight: 700;
+        font-size: 0.78rem;
+        display: flex;
+        align-items: center;
+        letter-spacing: 0.5px;
+    }
+
+    .benefits-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.3rem;
+    }
+
+    .benefits-list ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .benefits-list li {
+        color: #4a5568;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        font-size: 0.7rem;
+        font-weight: 500;
+        padding: 0.15rem 0;
+    }
+
+    .benefits-list li i {
+        color: #FF8C00;
+        font-size: 0.65rem;
+        min-width: 12px;
+    }
+
+    /* Links */
+    .signup-links {
+        text-align: center;
+        margin-top: 1rem;
+        padding-top: 0.8rem;
+        border-top: 1px solid rgba(255, 140, 0, 0.15);
+        position: relative;
+        z-index: 3;
+    }
+
+    .signup-links p {
+        margin-bottom: 0.4rem;
+        font-size: 0.72rem;
+    }
+
+    .signup-links a {
+        color: #FF8C00;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.72rem;
+        transition: all 0.2s ease;
+    }
+
+    .signup-links a:hover {
+        color: #FF6B35;
+        text-decoration: underline;
+    }
+
+    /* Animations */
+    @keyframes shimmer {
+        0% { background-position: -200% 0; }
+        100% { background-position: 200% 0; }
+    }
+
+    .premium-signup-card {
+        animation: fadeInUp 0.5s ease-out;
+    }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(15px) scale(0.98);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .premium-signup-container {
+            max-width: 420px;
+        }
+        
+        .form-grid {
+            grid-template-columns: 1fr;
+            gap: 0.6rem;
+        }
+        
+        .benefits-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .premium-signup-section {
+            padding: 15px;
+        }
+        
+        .premium-signup-card {
+            padding: 1.2rem 1.5rem;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Premium Ultra Compact Wide Signup Section -->
+<section class="premium-signup-section">
+    <div class="premium-signup-container">
+        <div class="premium-signup-card">
+            <!-- Signup Header -->
+            <div class="signup-header">
+                <div class="signup-icon">
+                    <i class="bi bi-person-plus"></i>
+                </div>
+                <h2>Client Signup</h2>
+                <p>Create your construction portal account</p>
+            </div>
+
+            <!-- Error Messages -->
+            {% if form.errors %}
+                <div class="premium-alert premium-alert-danger">
+                    <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                    Please correct the errors below
+                </div>
+            {% endif %}
+
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="premium-alert premium-alert-{{ message.tags }}">
+                        <i class="bi bi-check-circle-fill me-2"></i>
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            <!-- Signup Form -->
+            <form method="post">
+                {% csrf_token %}
+                
+                <!-- Two-column form layout -->
+                <div class="form-grid">
+                    <!-- Full Name Field -->
+                    <div class="premium-form-group">
+                        <label for="id_full_name" class="premium-form-label">
+                            Full Name
+                        </label>
+                        <input type="text" 
+                               name="full_name" 
+                               class="premium-form-control" 
+                               id="id_full_name" 
+                               placeholder="Full name"
+                               required
+                               autofocus>
+                        <i class="bi bi-person form-icon"></i>
+                    </div>
+
+                    <!-- Email Field -->
+                    <div class="premium-form-group">
+                        <label for="id_email" class="premium-form-label">
+                            Email
+                        </label>
+                        <input type="email" 
+                               name="email" 
+                               class="premium-form-control" 
+                               id="id_email" 
+                               placeholder="Email address"
+                               required>
+                        <i class="bi bi-envelope form-icon"></i>
+                    </div>
+
+                    <!-- Phone Field -->
+                    <div class="premium-form-group">
+                        <label for="id_phone" class="premium-form-label">
+                            Phone
+                        </label>
+                        <input type="tel" 
+                               name="phone" 
+                               class="premium-form-control" 
+                               id="id_phone" 
+                               placeholder="Phone number"
+                               required>
+                        <i class="bi bi-phone form-icon"></i>
+                    </div>
+
+                    <!-- Project Type -->
+                    <div class="premium-form-group">
+                        <label for="id_project_type" class="premium-form-label">
+                            Project Type
+                        </label>
+                        <select name="project_type" 
+                                class="premium-form-control" 
+                                id="id_project_type"
+                                required>
+                            <option value="">Select type</option>
+                            <option value="residential">Residential</option>
+                            <option value="commercial">Commercial</option>
+                            <option value="renovation">Renovation</option>
+                            <option value="custom">Custom Build</option>
+                        </select>
+                        <i class="bi bi-building form-icon"></i>
+                    </div>
+                </div>
+
+                <!-- Full-width fields -->
+                <div class="premium-form-group">
+                    <label for="id_password1" class="premium-form-label">
+                        Password
+                    </label>
+                    <input type="password" 
+                           name="password1" 
+                           class="premium-form-control" 
+                           id="id_password1" 
+                           placeholder="Create password"
+                           required>
+                    <i class="bi bi-lock form-icon"></i>
+                    <div class="password-strength strength-weak" id="password-strength">
+                        Password strength: Weak
+                    </div>
+                </div>
+
+                <div class="premium-form-group">
+                    <label for="id_password2" class="premium-form-label">
+                        Confirm Password
+                    </label>
+                    <input type="password" 
+                           name="password2" 
+                           class="premium-form-control" 
+                           id="id_password2" 
+                           placeholder="Confirm password"
+                           required>
+                    <i class="bi bi-shield-lock form-icon"></i>
+                </div>
+
+                <!-- Terms Agreement -->
+                <div class="terms-group">
+                    <label class="terms-checkbox">
+                        <input type="checkbox" name="terms" required>
+                        I agree to the Terms of Service and Privacy Policy
+                    </label>
+                </div>
+
+                <!-- Signup Button -->
+                <button type="submit" class="premium-signup-btn">
+                    <i class="bi bi-person-check"></i>
+                    Create Account
+                </button>
+            </form>
+
+            <!-- Compact Benefits Grid -->
+            <div class="benefits-list">
+                <h6><i class="bi bi-award me-2"></i>Client Benefits</h6>
+                <div class="benefits-grid">
+                    <ul>
+                        <li><i class="bi bi-clock"></i> 24/7 Project Access</li>
+                        <li><i class="bi bi-camera"></i> Progress Updates</li>
+                        <li><i class="bi bi-chat"></i> Team Communication</li>
+                    </ul>
+                    <ul>
+                        <li><i class="bi bi-file-text"></i> Documents</li>
+                        <li><i class="bi bi-graph-up"></i> Budget Tracking</li>
+                        <li><i class="bi bi-calendar"></i> Timeline Updates</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Links -->
+            <div class="signup-links">
+                <p>
+                    Already have an account? <a href="/login/">Sign in here</a>
+                </p>
+                <p>
+                    <a href="{% url 'home' %}">← Back to Homepage</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const signupForm = document.querySelector('form');
+        const passwordInput = document.getElementById('id_password1');
+        const passwordStrength = document.getElementById('password-strength');
+        
+        // Password strength indicator
+        if (passwordInput && passwordStrength) {
+            passwordInput.addEventListener('input', function() {
+                const password = this.value;
+                let strength = 'Weak';
+                let strengthClass = 'strength-weak';
+                
+                if (password.length >= 8) {
+                    strength = 'Medium';
+                    strengthClass = 'strength-medium';
+                }
+                
+                if (password.length >= 12 && /[A-Z]/.test(password) && /[0-9]/.test(password) && /[^A-Za-z0-9]/.test(password)) {
+                    strength = 'Strong';
+                    strengthClass = 'strength-strong';
+                }
+                
+                passwordStrength.textContent = `Password strength: ${strength}`;
+                passwordStrength.className = `password-strength ${strengthClass}`;
+            });
+        }
+        
+        if (signupForm) {
+            signupForm.addEventListener('submit', function(e) {
+                const submitButton = this.querySelector('button[type="submit"]');
+                const originalText = submitButton.innerHTML;
+                
+                submitButton.innerHTML = '<i class="bi bi-arrow-repeat spinner"></i> Creating...';
+                submitButton.disabled = true;
+                
+                setTimeout(() => {
+                    submitButton.innerHTML = originalText;
+                    submitButton.disabled = false;
+                }, 3000);
+            });
+        }
+
+        // Select dropdown styling
+        const style = document.createElement('style');
+        style.textContent = `
+            select.premium-form-control {
+                appearance: none;
+                background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23FF8C00' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+                background-repeat: no-repeat;
+                background-position: right 10px center;
+                background-size: 10px;
+                padding-right: 30px;
+            }
+            
+            .spinner {
+                animation: spin 1s linear infinite;
+            }
+            
+            @keyframes spin {
+                0% { transform: rotate(0deg); }
+                100% { transform: rotate(360deg); }
+            }
+        `;
+        document.head.appendChild(style);
+    });
+</script>
+{% endblock %}

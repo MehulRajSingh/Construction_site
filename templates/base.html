@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Construction Site{% endblock %}</title>
+    
+    <!-- Meta tags for SEO -->
+    {% block meta %}
+    <meta name="description" content="Professional construction services with quality craftsmanship and innovative solutions for residential and commercial projects.">
+    <meta name="keywords" content="construction, building, renovation, construction services, builders">
+    {% endblock %}
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- SwiperJS CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css">
+    
+    <style>
+        :root {
+            /* Orange-Yellow Construction Color Palette */
+            --primary-orange: #FF8C00;       /* Dark Orange - Strength & Durability */
+            --primary-yellow: #FFD700;       /* Golden Yellow - Energy & Visibility */
+            --accent-orange: #FF6B35;        /* Vibrant Orange - Action & Attention */
+            --dark-color: #1A1A1A;           /* Rich Black for text */
+            --dark-blue: #2C3E50;            /* Dark Blue for contrast */
+            --light-color: #F8F9FA;          /* Light background */
+            --gray-color: #6C757D;           /* Neutral gray */
+            --white-color: #FFFFFF;
+            --success-color: #28a745;
+            
+            /* Gradients */
+            --gradient-1: linear-gradient(135deg, var(--primary-yellow) 0%, var(--primary-orange) 100%);
+            --gradient-2: linear-gradient(135deg, var(--dark-blue) 0%, var(--dark-color) 100%);
+            --gradient-3: linear-gradient(135deg, var(--primary-yellow) 0%, var(--accent-orange) 100%);
+            --gradient-4: linear-gradient(135deg, var(--primary-yellow) 0%, var(--primary-orange) 50%, var(--accent-orange) 100%);
+            
+            /* Shadows */
+            --shadow-sm: 0 2px 4px rgba(0,0,0,0.1);
+            --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+            --shadow-lg: 0 10px 15px rgba(0,0,0,0.1);
+            --shadow-xl: 0 20px 25px rgba(0,0,0,0.15);
+            
+            --border-radius: 12px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--dark-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Scroll Progress Bar */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 4px;
+            background: var(--gradient-3);
+            z-index: 9999;
+            transition: width 0.2s ease;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: 700;
+            color: var(--dark-blue);
+        }
+
+        .section-title {
+            position: relative;
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 70px;
+            height: 4px;
+            background: var(--gradient-1);
+            border-radius: 2px;
+        }
+
+        .section-title.center::after {
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* Buttons */
+        .btn-primary {
+            background: var(--gradient-1);
+            border: none;
+            padding: 12px 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-md);
+            color: var(--dark-color);
+            border-radius: 50px;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-xl);
+            background: var(--gradient-3);
+            color: var(--dark-color);
+        }
+
+        .btn-primary-enhanced {
+            background: var(--gradient-1);
+            color: var(--dark-color);
+            border: none;
+            padding: 12px 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border-radius: 50px;
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-primary-enhanced:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-xl);
+            background: var(--gradient-3);
+            color: var(--dark-color);
+        }
+
+        .btn-outline-primary {
+            color: var(--primary-orange);
+            border: 2px solid var(--primary-orange);
+            font-weight: 600;
+            border-radius: 50px;
+            padding: 10px 28px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline-primary:hover {
+            background: var(--primary-orange);
+            border-color: var(--primary-orange);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        .btn-outline-enhanced {
+            background: transparent;
+            border: 2px solid white;
+            color: white;
+            font-weight: 600;
+            border-radius: 50px;
+            padding: 10px 28px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline-enhanced:hover {
+            background: white;
+            color: var(--primary-orange);
+            transform: translateY(-3px);
+        }
+
+        .btn-enhanced {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-enhanced:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        /* Navbar Styles */
+        .navbar {
+            background: rgba(255, 255, 255, 0.95) !important;
+            backdrop-filter: blur(20px);
+            box-shadow: var(--shadow-md);
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+        }
+        
+        .navbar.scrolled {
+            padding: 0.7rem 0;
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .navbar-brand {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .navbar-brand:hover {
+            transform: scale(1.05);
+        }
+        
+        .navbar-brand i {
+            font-size: 2.2rem;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .navbar-nav .nav-link {
+            color: var(--dark-blue) !important;
+            font-weight: 500;
+            margin: 0 0.3rem;
+            padding: 0.5rem 1.2rem !important;
+            transition: all 0.3s ease;
+            position: relative;
+            border-radius: 50px;
+        }
+        
+        .navbar-nav .nav-link:hover {
+            color: var(--primary-orange) !important;
+            background-color: rgba(255, 140, 0, 0.1);
+        }
+        
+        .navbar-nav .nav-link.active {
+            background: var(--gradient-1);
+            color: var(--dark-color) !important;
+        }
+        
+        .nav-cta-btn {
+            background: var(--gradient-1);
+            color: var(--dark-color) !important;
+            padding: 0.6rem 2rem !important;
+            border-radius: 50px;
+            margin-left: 1rem;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            box-shadow: var(--shadow-md);
+            border: none;
+        }
+        
+        .nav-cta-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(255, 215, 0, 0.3);
+            background: var(--gradient-3);
+            color: var(--dark-color) !important;
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), var(--hero-image) no-repeat center center/cover;
+            overflow: hidden;
+            padding-top: 80px;
+        }
+
+        .hero-badge {
+            background: var(--gradient-3);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            display: inline-block;
+            margin-bottom: 1rem;
+            box-shadow: var(--shadow-md);
+        }
+
+        /* Feature Cards */
+        .feature-card {
+            background: white;
+            padding: 2.5rem 2rem;
+            border-radius: var(--border-radius);
+            transition: all 0.4s ease;
+            box-shadow: var(--shadow-md);
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+            height: 100%;
+            text-align: center;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-xl);
+            border-color: var(--primary-yellow);
+        }
+
+        .icon-wrapper {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
+            background: var(--gradient-1);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover .icon-wrapper {
+            background: var(--gradient-3);
+            transform: scale(1.1);
+        }
+
+        /* Stats Section */
+        .stats {
+            background: var(--gradient-2);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-item {
+            position: relative;
+            z-index: 1;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .stat-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-yellow);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            color: white;
+        }
+
+        /* Project Cards */
+        .project-slide {
+            background: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s ease;
+        }
+
+        .project-slide:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .project-image {
+            position: relative;
+            overflow: hidden;
+            height: 250px;
+        }
+
+        .project-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .project-slide:hover .project-image img {
+            transform: scale(1.05);
+        }
+
+        .project-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(255, 140, 0, 0.8), rgba(255, 107, 53, 0.8));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .project-slide:hover .project-overlay {
+            opacity: 1;
+        }
+
+        /* Testimonials */
+        .testimonial {
+            background: white;
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-md);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .rating {
+            color: var(--primary-yellow);
+        }
+
+        .testimonial-quote {
+            position: relative;
+            padding-left: 2rem;
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+        }
+
+        .testimonial-quote::before {
+            content: '"';
+            position: absolute;
+            left: 0;
+            top: -10px;
+            font-size: 3rem;
+            color: var(--primary-orange);
+            font-family: 'Georgia', serif;
+            line-height: 1;
+        }
+
+        /* CTA Section */
+        .cta {
+            position: relative;
+            padding: 6rem 0;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), var(--cta-image) no-repeat center center/cover;
+            color: white;
+            text-align: center;
+        }
+
+        .cta-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Contact Form */
+        .contact-form .card-body {
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-lg);
+            background: white;
+        }
+
+        .form-control, .form-select {
+            padding: 12px 20px;
+            border-radius: 10px;
+            border: 1px solid #e0e0e0;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus, .form-select:focus {
+            border-color: var(--primary-orange);
+            box-shadow: 0 0 0 0.25rem rgba(255, 140, 0, 0.25);
+        }
+
+        .btn-submit {
+            background: var(--gradient-3);
+            color: var(--dark-color);
+            border: none;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 140, 0, 0.3);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--gradient-2);
+            position: relative;
+            color: white;
+        }
+
+        footer h4, footer h5 {
+            color: var(--primary-yellow) !important;
+            font-weight: 600;
+        }
+
+        footer a {
+            transition: all 0.3s ease;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            color: var(--primary-yellow) !important;
+            transform: translateX(5px);
+        }
+
+        .social-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .social-icon:hover {
+            background: var(--primary-yellow);
+            color: var(--dark-color);
+            transform: translateY(-3px);
+        }
+
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--gradient-1);
+            color: var(--dark-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            box-shadow: var(--shadow-lg);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s ease;
+            z-index: 999;
+        }
+
+        .back-to-top.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-5px);
+            background: var(--gradient-3);
+        }
+
+        /* Badge */
+        .badge {
+            background: var(--gradient-1) !important;
+            color: var(--dark-color) !important;
+            padding: 8px 16px;
+            font-weight: 500;
+            border-radius: 50px;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 991px) {
+            .navbar-nav {
+                text-align: center;
+                padding: 1rem 0;
+            }
+            
+            .navbar-nav .nav-link {
+                margin: 0.25rem 0;
+                display: inline-block;
+            }
+
+            .navbar-nav .nav-link.active {
+                background: var(--gradient-1);
+                color: var(--dark-color) !important;
+                padding: 0.5rem 2rem !important;
+            }
+            
+            .nav-cta-btn {
+                margin: 1rem 0 0 0;
+                display: inline-block;
+            }
+
+            .stat-number {
+                font-size: 2.5rem;
+            }
+            
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+    
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <!-- Scroll Progress Bar -->
+    <div class="scroll-progress"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'home' %}">
+                <i class="bi bi-buildings-fill"></i>
+                Construct Site
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}" href="{% url 'home' %}">
+                            <i class="bi bi-house-door me-1"></i>Home
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if '/projects/' in request.path %}active{% endif %}" href="/projects/">
+                            <i class="bi bi-briefcase me-1"></i>Projects
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if '/services/' in request.path %}active{% endif %}" href="/services/">
+                            <i class="bi bi-gear me-1"></i>Services
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'about' %}active{% endif %}" href="{% url 'about' %}">
+                            <i class="bi bi-info-circle me-1"></i>About
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'contact' %}active{% endif %}" href="{% url 'contact' %}">
+                            <i class="bi bi-envelope me-1"></i>Contact
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-cta-btn" href="tel:+917004020921">
+                            <i class="bi bi-telephone-fill me-1"></i>Call Now
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Add padding to account for fixed navbar -->
+    <div style="padding-top: 80px;">
+        <!-- Main Content -->
+        {% block content %}
+        {% endblock %}
+    </div>
+
+    <!-- Footer -->
+    <footer class="text-white py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <h4 class="mb-3">
+                        <i class="bi bi-buildings-fill"></i> Construct Site
+                    </h4>
+                    <p class="text-light opacity-75">Building excellence since 2015. Your trusted partner in construction with a commitment to quality, innovation, and customer satisfaction.</p>
+                    <div class="mt-4">
+                        <a href="#" class="social-icon me-2"><i class="bi bi-facebook"></i></a>
+                        <a href="#" class="social-icon me-2"><i class="bi bi-twitter"></i></a>
+                        <a href="#" class="social-icon me-2"><i class="bi bi-linkedin"></i></a>
+                        <a href="#" class="social-icon"><i class="bi bi-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-2 mb-4">
+                    <h5 class="mb-3">Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="{% url 'home' %}" class="text-white-50 text-decoration-none">Home</a></li>
+                        <li class="mb-2"><a href="{% url 'about' %}" class="text-white-50 text-decoration-none">About Us</a></li>
+                        <li class="mb-2"><a href="/services/" class="text-white-50 text-decoration-none">Services</a></li>
+                        <li class="mb-2"><a href="/projects/" class="text-white-50 text-decoration-none">Projects</a></li>
+                        <li class="mb-2"><a href="{% url 'contact' %}" class="text-white-50 text-decoration-none">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <h5 class="mb-3">Services</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Residential Construction</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Commercial Construction</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Industrial Construction</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Renovation Services</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Project Management</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <h5 class="mb-3">Contact Info</h5>
+                    <p class="text-white-50 mb-2">
+                        <i class="bi bi-person me-2"></i>Mehul Raj Singh
+                    </p>
+                    <p class="text-white-50 mb-2">
+                        <i class="bi bi-telephone me-2"></i>+91 7004020921
+                    </p>
+                    <p class="text-white-50 mb-2">
+                        <i class="bi bi-envelope me-2"></i>mehulrajsingh9145@gmail.com
+                    </p>
+                    <p class="text-white-50">
+                        <i class="bi bi-geo-alt me-2"></i>India
+                    </p>
+                </div>
+            </div>
+            <hr class="border-secondary my-4">
+            <div class="text-center text-white-50">
+                <p class="mb-0">&copy; 2025 Construct Site. All rights reserved. | Designed by Mehul Raj Singh</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <a href="#" class="back-to-top">
+        <i class="bi bi-arrow-up"></i>
+    </a>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- AOS Animation Library -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <!-- SwiperJS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+    <!-- Fancybox -->
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
+    
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 800,
+            once: true,
+            easing: 'ease-in-out',
+            offset: 100
+        });
+
+        // Navbar Scroll Effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            const backToTop = document.querySelector('.back-to-top');
+            
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+            
+            if (window.scrollY > 300) {
+                backToTop.classList.add('active');
+            } else {
+                backToTop.classList.remove('active');
+            }
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Scroll progress bar
+        window.addEventListener('scroll', () => {
+            const scrollProgress = document.querySelector('.scroll-progress');
+            const scrollTop = window.scrollY;
+            const docHeight = document.body.offsetHeight;
+            const winHeight = window.innerHeight;
+            const scrollPercent = (scrollTop / (docHeight - winHeight)) * 100;
+            scrollProgress.style.width = `${scrollPercent}%`;
+        });
+        
+        {% block extra_js %} {% endblock %}
+    </script>
+</body>
+</html>

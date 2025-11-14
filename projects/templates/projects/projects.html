@@ -1,0 +1,657 @@
+{% extends 'base.html' %}
+
+{% block title %}Construction Site{% endblock %}
+
+{% block content %}
+<!-- Projects Hero Section -->
+<div class="projects-hero">
+    <div class="container">
+        <div class="row align-items-center min-vh-50">
+            <div class="col-lg-8 mx-auto text-center">
+                <h1 class="display-3 fw-bold text-white mb-4">Our Projects</h1>
+                <p class="lead text-white mb-4">
+                    Explore our portfolio of exceptional construction projects that showcase 
+                    our commitment to quality, innovation, and client satisfaction.
+                </p>
+                <div class="hero-stats d-flex justify-content-center gap-5">
+                    <div class="stat-item">
+                        <h3 class="text-warning mb-1">250+</h3>
+                        <small class="text-white">Projects Completed</small>
+                    </div>
+                    <div class="stat-item">
+                        <h3 class="text-warning mb-1">15+</h3>
+                        <small class="text-white">Years Experience</small>
+                    </div>
+                    <div class="stat-item">
+                        <h3 class="text-warning mb-1">50+</h3>
+                        <small class="text-white">Awards Won</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Projects Filter Section -->
+<div class="container py-5">
+    <div class="text-center mb-5">
+        <h2 class="display-5 fw-bold mb-3">Our Portfolio</h2>
+        <p class="lead text-muted">Discover our diverse range of construction projects</p>
+        
+        <!-- Project Categories Filter -->
+        <div class="project-filters mb-5">
+            <button class="btn filter-btn active" data-filter="all">All Projects</button>
+            <button class="btn filter-btn" data-filter="residential">Residential</button>
+            <button class="btn filter-btn" data-filter="commercial">Commercial</button>
+            <button class="btn filter-btn" data-filter="industrial">Industrial</button>
+            <button class="btn filter-btn" data-filter="renovation">Renovation</button>
+            <button class="btn filter-btn" data-filter="infrastructure">Infrastructure</button>
+        </div>
+    </div>
+
+    <!-- Projects Grid -->
+    <div class="row g-4" id="projects-grid">
+        <!-- Project 1 - Residential -->
+        <div class="col-lg-4 col-md-6 project-item" data-category="residential">
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="https://images.pexels.com/photos/13752348/pexels-photo-13752348.jpeg" 
+                         alt="Modern Luxury Villa" class="img-fluid">
+                    <div class="project-overlay">
+                        <div class="project-info">
+                            <h5>Modern Luxury Villa</h5>
+                            <p>Beverly Hills, California</p>
+                            <div class="project-badges">
+                                <span class="badge">Completed 2023</span>
+                                <span class="badge">5,200 sq.ft.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-content">
+                    <span class="project-category residential">Residential</span>
+                    <h4 class="project-title">Modern Luxury Villa</h4>
+                    <p class="project-description">A stunning contemporary villa featuring smart home technology, infinity pool, and sustainable design elements.</p>
+                    <div class="project-details">
+                        <div class="detail">
+                            <i class="bi bi-calendar"></i>
+                            <span>12 Months</span>
+                        </div>
+                        <div class="detail">
+                            <i class="bi bi-currency-dollar"></i>
+                            <span>$4.2M</span>
+                        </div>
+                        <div class="detail">
+                            <i class="bi bi-award"></i>
+                            <span>Design Excellence</span>
+                        </div>
+                    </div>
+                    <a href="#" class="btn btn-primary btn-sm">View Case Study</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Project 2 - Commercial -->
+        <div class="col-lg-4 col-md-6 project-item" data-category="commercial">
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" 
+                         alt="Corporate Office Tower" class="img-fluid">
+                    <div class="project-overlay">
+                        <div class="project-info">
+                            <h5>Corporate Office Tower</h5>
+                            <p>Manhattan, New York</p>
+                            <div class="project-badges">
+                                <span class="badge">Completed 2022</span>
+                                <span class="badge">45 Stories</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-content">
+                    <span class="project-category commercial">Commercial</span>
+                    <h4 class="project-title">Corporate Office Tower</h4>
+                    <p class="project-description">A 45-story LEED Platinum certified office building with state-of-the-art facilities and panoramic city views.</p>
+                    <div class="project-details">
+                        <div class="detail">
+                            <i class="bi bi-calendar"></i>
+                            <span>24 Months</span>
+                        </div>
+                        <div class="detail">
+                            <i class="bi bi-currency-dollar"></i>
+                            <span>$85M</span>
+                        </div>
+                        <div class="detail">
+                            <i class="bi bi-award"></i>
+                            <span>LEED Platinum</span>
+                        </div>
+                    </div>
+                    <a href="#" class="btn btn-primary btn-sm">View Case Study</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Project 3 - Industrial -->
+        <div class="col-lg-4 col-md-6 project-item" data-category="industrial">
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="https://images.pexels.com/photos/29988981/pexels-photo-29988981.jpeg" 
+                         alt="Advanced Manufacturing Facility" class="img-fluid">
+                    <div class="project-overlay">
+                        <div class="project-info">
+                            <h5>Manufacturing Facility</h5>
+                            <p>Detroit, Michigan</p>
+                            <div class="project-badges">
+                                <span class="badge">Completed 2023</span>
+                                <span class="badge">120,000 sq.ft.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-content">
+                    <span class="project-category industrial">Industrial</span>
+                    <h4 class="project-title">Advanced Manufacturing Facility</h4>
+                    <p class="project-description">A fully automated manufacturing plant with robotics integration and sustainable energy systems.</p>
+                    <div class="project-details">
+                        <div class="detail">
+                            <i class="bi bi-calendar"></i>
+                            <span>18 Months</span>
+                        </div>
+                        <div class="detail">
+                            <i class="bi bi-currency-dollar"></i>
+                            <span>$32M</span>
+                        </div>
+                        <div class="detail">
+                            <i class="bi bi-award"></i>
+                            <span>Innovation Award</span>
+                        </div>
+                    </div>
+                    <a href="#" class="btn btn-primary btn-sm">View Case Study</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Project 4 - Renovation -->
+        <div class="col-lg-4 col-md-6 project-item" data-category="renovation">
+            <div class="project-card">
+                <div class="project-image">
+                    <!-- <img src="https://images.unsplash.com/photo-1600607687644-c7171b42498b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" 
+                         alt="Historic Hotel Restoration" class="img-fluid"> -->
+                         <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" 
+     alt="Historic Hotel Restoration" class="img-fluid">
+                    <div class="project-overlay">
+                        <div class="project-info">
+                            <h5>Historic Hotel Restoration</h5>
+                            <p>Chicago, Illinois</p>
+                            <div class="project-badges">
+                                <span class="badge">Completed 2022</span>
+                                <span class="badge">Heritage Project</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-content">
+                    <span class="project-category renovation">Renovation</span>
+                    <h4 class="project-title">Historic Hotel Restoration</h4>
+                    <p class="project-description">Preservation and modernization of a 1920s luxury hotel while maintaining its historic architectural integrity.</p>
+                    <div class="project-details">
+                        <div class="detail">
+                            <i class="bi bi-calendar"></i>
+                            <span>14 Months</span>
+                        </div>
+                        <div class="detail">
+                            <i class="bi bi-currency-dollar"></i>
+                            <span>$18.5M</span>
+                        </div>
+                        <div class="detail">
+                            <i class="bi bi-award"></i>
+                            <span>Preservation Award</span>
+                        </div>
+                    </div>
+                    <a href="#" class="btn btn-primary btn-sm">View Case Study</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Project 5 - Infrastructure -->
+        <div class="col-lg-4 col-md-6 project-item" data-category="infrastructure">
+            <div class="project-card">
+
+                <div class="project-image">
+                    <img src="https://cdn.prgloo.com/media/download/ae0f049b0e794601b0b596671dda1337"  
+     alt="Modern Bridge Over Water" class="img-fluid">
+
+
+
+               
+
+
+               
+               
+                    <div class="project-overlay">
+                        <div class="project-info">
+                            <h5>Highway Bridge</h5>
+                            <p>Denver, Colorado</p>
+                            <div class="project-badges">
+                                <span class="badge">Completed 2023</span>
+                                <span class="badge">1.2 Miles</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-content">
+                    <span class="project-category infrastructure">Infrastructure</span>
+                    <h4 class="project-title">Highway Bridge Construction</h4>
+                    <p class="project-description">A 1.2-mile cable-stayed bridge designed to withstand extreme weather conditions and heavy traffic loads.</p>
+                    <div class="project-details">
+                        <div class="detail">
+                            <i class="bi bi-calendar"></i>
+                            <span>36 Months</span>
+                        </div>
+                        <div class="detail">
+                            <i class="bi bi-currency-dollar"></i>
+                            <span>$120M</span>
+                        </div>
+                        <div class="detail">
+                            <i class="bi bi-award"></i>
+                            <span>Engineering Excellence</span>
+                        </div>
+                    </div>
+                    <a href="#" class="btn btn-primary btn-sm">View Case Study</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Project 6 - Residential -->
+        <div class="col-lg-4 col-md-6 project-item" data-category="residential">
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" 
+                         alt="Lakeside Family Estate" class="img-fluid">
+                    <div class="project-overlay">
+                        <div class="project-info">
+                            <h5>Lakeside Family Estate</h5>
+                            <p>Lake Tahoe, Nevada</p>
+                            <div class="project-badges">
+                                <span class="badge">Completed 2023</span>
+                                <span class="badge">8,500 sq.ft.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-content">
+                    <span class="project-category residential">Residential</span>
+                    <h4 class="project-title">Lakeside Family Estate</h4>
+                    <p class="project-description">A custom-built luxury estate with private dock, home theater, and panoramic lake views.</p>
+                    <div class="project-details">
+                        <div class="detail">
+                            <i class="bi bi-calendar"></i>
+                            <span>16 Months</span>
+                        </div>
+                        <div class="detail">
+                            <i class="bi bi-currency-dollar"></i>
+                            <span>$6.8M</span>
+                        </div>
+                        <div class="detail">
+                            <i class="bi bi-award"></i>
+                            <span>Luxury Design</span>
+                        </div>
+                    </div>
+                    <a href="#" class="btn btn-primary btn-sm">View Case Study</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Load More Projects -->
+    <div class="text-center mt-5">
+        <button class="btn btn-outline-primary btn-lg" id="loadMoreProjects">
+            <i class="bi bi-plus-circle me-2"></i>Load More Projects
+        </button>
+    </div>
+</div>
+
+<!-- Project Statistics -->
+<div class="project-statistics bg-light py-5">
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-md-3 col-6 mb-4">
+                <div class="stat-item">
+                    <h3 class="display-4 fw-bold text-primary">250+</h3>
+                    <p class="text-muted">Projects Completed</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-6 mb-4">
+                <div class="stat-item">
+                    <h3 class="display-4 fw-bold text-primary">15+</h3>
+                    <p class="text-muted">Years Experience</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-6 mb-4">
+                <div class="stat-item">
+                    <h3 class="display-4 fw-bold text-primary">50+</h3>
+                    <p class="text-muted">Awards Won</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-6 mb-4">
+                <div class="stat-item">
+                    <h3 class="display-4 fw-bold text-primary">98%</h3>
+                    <p class="text-muted">Client Satisfaction</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- CTA Section -->
+<div class="cta-section py-5 bg-primary text-white">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                <h3 class="fw-bold mb-3">Ready to Start Your Project?</h3>
+                <p class="mb-4 mb-lg-0">
+                    Let's discuss your construction needs and bring your vision to life with our expert team.
+                </p>
+            </div>
+            <div class="col-lg-4 text-lg-end">
+                <a href="{% url 'contact' %}" class="btn btn-warning btn-lg px-4 me-2">
+                    <i class="bi bi-chat-dots me-2"></i>Get Quote
+                </a>
+                <a href="tel:+917004020921" class="btn btn-outline-light btn-lg px-4">
+                    <i class="bi bi-telephone me-2"></i>Call Now
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.projects-hero {
+    background: linear-gradient(135deg, var(--primary-yellow) 0%, var(--primary-orange) 100%);
+    padding: 120px 0 80px;
+    position: relative;
+    overflow: hidden;
+}
+
+.projects-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+    opacity: 0.3;
+}
+
+.min-vh-50 {
+    min-height: 50vh;
+}
+
+.hero-stats .stat-item {
+    text-align: center;
+}
+
+/* Project Filters */
+.project-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+}
+
+.filter-btn {
+    border-radius: 25px;
+    padding: 8px 20px;
+    transition: all 0.3s ease;
+    border-width: 2px;
+    font-weight: 500;
+    background: transparent;
+    border: 2px solid var(--primary-orange);
+    color: var(--primary-orange);
+}
+
+.filter-btn.active,
+.filter-btn:hover {
+    background: var(--gradient-1);
+    border-color: transparent;
+    color: var(--dark-color);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 140, 0, 0.3);
+}
+
+/* Project Cards */
+.project-card {
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+    transition: all 0.3s ease;
+    height: 100%;
+}
+
+.project-card:hover {
+    transform: translateY(-10px);
+    box-shadow: var(--shadow-xl);
+}
+
+.project-image {
+    position: relative;
+    height: 250px;
+    overflow: hidden;
+}
+
+.project-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+}
+
+.project-card:hover .project-image img {
+    transform: scale(1.1);
+}
+
+.project-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(255, 140, 0, 0.9), rgba(255, 107, 53, 0.9));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.project-card:hover .project-overlay {
+    opacity: 1;
+}
+
+.project-info {
+    text-align: center;
+    color: white;
+    padding: 20px;
+}
+
+.project-info h5 {
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.project-info p {
+    margin-bottom: 10px;
+    opacity: 0.9;
+}
+
+.project-badges .badge {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    margin: 2px;
+    font-size: 0.7rem;
+}
+
+.project-content {
+    padding: 20px;
+}
+
+.project-category {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.project-category.residential {
+    background: rgba(76, 175, 80, 0.1);
+    color: #4CAF50;
+}
+
+.project-category.commercial {
+    background: rgba(33, 150, 243, 0.1);
+    color: #2196F3;
+}
+
+.project-category.industrial {
+    background: rgba(156, 39, 176, 0.1);
+    color: #9C27B0;
+}
+
+.project-category.renovation {
+    background: rgba(255, 152, 0, 0.1);
+    color: #FF9800;
+}
+
+.project-category.infrastructure {
+    background: rgba(121, 85, 72, 0.1);
+    color: #795548;
+}
+
+.project-title {
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: var(--dark-blue);
+}
+
+.project-description {
+    color: var(--gray-color);
+    margin-bottom: 15px;
+    font-size: 0.9rem;
+}
+
+.project-details {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    padding: 10px 0;
+    border-top: 1px solid rgba(0,0,0,0.1);
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+
+.project-details .detail {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    font-size: 0.8rem;
+}
+
+.project-details .detail i {
+    font-size: 1rem;
+    margin-bottom: 5px;
+    color: var(--primary-orange);
+}
+
+/* Statistics */
+.project-statistics {
+    background: var(--light-color);
+}
+
+.stat-item h3 {
+    color: var(--primary-orange) !important;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .projects-hero {
+        padding: 100px 0 60px;
+        text-align: center;
+    }
+    
+    .hero-stats {
+        justify-content: center;
+    }
+    
+    .project-filters {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .filter-btn {
+        width: 200px;
+    }
+    
+    .project-card:hover {
+        transform: translateY(-5px);
+    }
+    
+    .project-details {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+</style>
+
+<script>
+// Project Filter Functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const projectItems = document.querySelectorAll('.project-item');
+    
+    filterButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            // Remove active class from all buttons
+            filterButtons.forEach(btn => btn.classList.remove('active'));
+            
+            // Add active class to clicked button
+            this.classList.add('active');
+            
+            const filterValue = this.getAttribute('data-filter');
+            
+            // Filter project items
+            projectItems.forEach(item => {
+                if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
+                    item.style.display = 'block';
+                    setTimeout(() => {
+                        item.style.opacity = '1';
+                        item.style.transform = 'scale(1)';
+                    }, 50);
+                } else {
+                    item.style.opacity = '0';
+                    item.style.transform = 'scale(0.8)';
+                    setTimeout(() => {
+                        item.style.display = 'none';
+                    }, 500);
+                }
+            });
+        });
+    });
+
+    // Load More Projects
+    const loadMoreBtn = document.getElementById('loadMoreProjects');
+    if (loadMoreBtn) {
+        loadMoreBtn.addEventListener('click', function() {
+            // In a real application, this would fetch more projects from the server
+            alert('Loading more projects...');
+            // For demo purposes, we'll just show a message
+            this.disabled = true;
+            this.innerHTML = '<i class="bi bi-check-circle me-2"></i>All Projects Loaded';
+        });
+    }
+});
+</script>
+{% endblock %}

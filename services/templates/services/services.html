@@ -1,0 +1,2192 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Our Services - Construction Site{% endblock %}
+
+{% block extra_css %}
+<style>
+    .services-hero {
+        background: var(--gradient-4);
+        padding: 120px 0 80px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .services-hero::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+        opacity: 0.3;
+    }
+
+    .services-hero .container {
+        position: relative;
+        z-index: 2;
+    }
+
+    .min-vh-50 {
+        min-height: 50vh;
+    }
+
+    .hero-stats .stat-item {
+        text-align: center;
+    }
+
+    /* Service Filters */
+    .service-filters {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: center;
+    }
+
+    .filter-btn {
+        border-radius: 25px;
+        padding: 8px 20px;
+        transition: all 0.3s ease;
+        border-width: 2px;
+        font-weight: 500;
+        background: transparent;
+        border: 2px solid var(--primary-orange);
+        color: var(--primary-orange);
+        cursor: pointer;
+    }
+
+    .filter-btn.active,
+    .filter-btn:hover {
+        background: var(--gradient-1);
+        border-color: transparent;
+        color: var(--dark-color);
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(255, 140, 0, 0.3);
+    }
+
+    /* Service Items - FIXED CSS */
+    .service-item {
+        transition: all 0.5s ease;
+        opacity: 1;
+        transform: scale(1);
+        display: block; /* Ensure initial display state */
+    }
+
+    /* Rest of your CSS remains exactly the same */
+    .service-card {
+        background: white;
+        border-radius: 20px;
+        overflow: hidden;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        border: none;
+        box-shadow: var(--shadow-md);
+        position: relative;
+        height: 100%;
+    }
+
+    .service-card:hover {
+        transform: translateY(-10px);
+        box-shadow: var(--shadow-xl);
+    }
+
+    .card-img-wrapper {
+        position: relative;
+        height: 250px;
+        overflow: hidden;
+    }
+
+    .card-img-top {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.6s ease;
+    }
+
+    .service-card:hover .card-img-top {
+        transform: scale(1.1);
+    }
+
+    .img-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(135deg, rgba(255, 140, 0, 0.8), rgba(255, 107, 53, 0.8));
+        opacity: 0;
+        transition: all 0.4s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .service-card:hover .img-overlay {
+        opacity: 1;
+    }
+
+    .service-icon-overlay {
+        background: rgba(255, 255, 255, 0.15);
+        border-radius: 50%;
+        width: 80px;
+        height: 80px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        backdrop-filter: blur(15px);
+        border: 3px solid rgba(255, 255, 255, 0.3);
+        transform: scale(0.8);
+        transition: transform 0.3s ease;
+    }
+
+    .service-card:hover .service-icon-overlay {
+        transform: scale(1);
+    }
+
+    .service-badge {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        background: var(--gradient-3);
+        color: var(--dark-color);
+        padding: 5px 12px;
+        border-radius: 15px;
+        font-size: 0.75rem;
+        font-weight: 600;
+    }
+
+    .price-tag {
+        position: absolute;
+        bottom: 15px;
+        left: 15px;
+        background: rgba(0,0,0,0.8);
+        color: white;
+        padding: 8px 15px;
+        border-radius: 20px;
+        backdrop-filter: blur(10px);
+        font-weight: 600;
+        font-size: 0.85rem;
+    }
+
+    /* Card Body */
+    .service-header {
+        border-bottom: 2px solid rgba(255, 140, 0, 0.1);
+        padding-bottom: 15px;
+    }
+
+    .service-rating {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .rating-text {
+        font-size: 0.85rem;
+        color: #666;
+        margin-left: 5px;
+    }
+
+    .features-grid {
+        background: linear-gradient(135deg, rgba(255, 140, 0, 0.05), rgba(255, 107, 53, 0.03));
+        border-radius: 15px;
+        padding: 20px;
+        border: 1px solid rgba(255, 140, 0, 0.1);
+    }
+
+    .feature-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 8px;
+        font-size: 0.9rem;
+    }
+
+    .service-details {
+        background: #f8f9fa;
+        border-radius: 12px;
+        padding: 15px;
+    }
+
+    .detail-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+        font-size: 0.9rem;
+    }
+
+    .detail-item:last-child {
+        margin-bottom: 0;
+    }
+
+    .detail-label {
+        font-weight: 600;
+        color: #555;
+        margin-right: 5px;
+    }
+
+    .detail-value {
+        color: #333;
+        font-weight: 500;
+    }
+
+    /* Additional Services */
+    .additional-service-item {
+        padding: 30px 20px;
+        border-radius: 15px;
+        background: white;
+        box-shadow: var(--shadow-md);
+        transition: all 0.3s ease;
+        border: 1px solid rgba(255, 140, 0, 0.1);
+        text-align: center;
+    }
+
+    .additional-service-item:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-lg);
+    }
+
+    .service-icon-round {
+        width: 80px;
+        height: 80px;
+        margin: 0 auto;
+        border-radius: 50%;
+        background: var(--gradient-1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--dark-color);
+        transition: all 0.3s ease;
+    }
+
+    .additional-service-item:hover .service-icon-round {
+        transform: scale(1.1);
+        background: var(--gradient-3);
+    }
+
+    /* Process Section */
+    .process-step {
+        position: relative;
+        padding: 30px 20px;
+        text-align: center;
+    }
+
+    .step-number {
+        width: 60px;
+        height: 60px;
+        margin: 0 auto;
+        border-radius: 50%;
+        background: var(--gradient-1);
+        color: var(--dark-color);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        font-weight: bold;
+        position: relative;
+        z-index: 2;
+    }
+
+    .process-step::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        background: rgba(255, 140, 0, 0.1);
+        z-index: 1;
+    }
+
+    /* Testimonials */
+    .testimonial-card {
+        background: white;
+        padding: 30px;
+        border-radius: 20px;
+        box-shadow: var(--shadow-md);
+        border-left: 5px solid var(--primary-orange);
+        position: relative;
+        transition: all 0.3s ease;
+    }
+
+    .testimonial-card:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-lg);
+    }
+
+    .testimonial-card::before {
+        content: '"';
+        position: absolute;
+        top: 20px;
+        right: 30px;
+        font-size: 4rem;
+        color: rgba(255, 140, 0, 0.1);
+        font-family: 'Georgia', serif;
+        line-height: 1;
+    }
+
+    .testimonial-text {
+        font-style: italic;
+        color: #555;
+        line-height: 1.6;
+        margin-bottom: 20px;
+        position: relative;
+        z-index: 2;
+    }
+
+    .testimonial-author {
+        border-top: 1px solid rgba(255, 140, 0, 0.1);
+        padding-top: 15px;
+    }
+
+    .stars {
+        display: flex;
+        gap: 2px;
+    }
+
+    /* Premium CTA */
+    .premium-cta {
+        background: var(--gradient-2);
+        padding: 80px 0;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .premium-cta .container {
+        position: relative;
+        z-index: 2;
+    }
+
+    .cta-features {
+        flex-wrap: wrap;
+    }
+
+    .cta-feature {
+        display: flex;
+        align-items: center;
+    }
+
+    .cta-buttons .btn {
+        border-radius: 15px;
+        font-weight: 600;
+        padding: 15px 30px;
+        transition: all 0.3s ease;
+        border: 2px solid transparent;
+    }
+
+    .btn-warning {
+        background: var(--gradient-1);
+        border: none;
+        color: var(--dark-color);
+    }
+
+    .btn-warning:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 25px rgba(255, 140, 0, 0.4);
+        background: var(--gradient-3);
+    }
+
+    .btn-outline-light:hover {
+        background: rgba(255, 255, 255, 0.1);
+        border-color: white;
+        transform: translateY(-3px);
+    }
+
+    .contact-info {
+        opacity: 0.8;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .services-hero {
+            padding: 100px 0 60px;
+            text-align: center;
+        }
+        
+        .hero-stats {
+            justify-content: center;
+        }
+        
+        .service-filters {
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .filter-btn {
+            width: 200px;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .cta-buttons {
+            text-align: center;
+        }
+        
+        .cta-features {
+            justify-content: center;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .action-buttons .row {
+            flex-direction: column;
+        }
+        
+        .service-details {
+            text-align: center;
+        }
+        
+        .detail-item {
+            justify-content: center;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Services Hero Section -->
+<div class="services-hero">
+    <div class="container">
+        <div class="row align-items-center min-vh-50">
+            <div class="col-lg-6">
+                <h1 class="display-3 fw-bold text-white mb-4">Our Services</h1>
+                <p class="lead text-white mb-4">
+                    From concept to completion, we deliver exceptional construction solutions 
+                    that exceed expectations and stand the test of time.
+                </p>
+                <div class="hero-stats d-flex gap-4">
+                    <div class="stat-item">
+                        <h3 class="text-warning mb-1">500+</h3>
+                        <small class="text-white">Projects Completed</small>
+                    </div>
+                    <div class="stat-item">
+                        <h3 class="text-warning mb-1">25+</h3>
+                        <small class="text-white">Years Experience</small>
+                    </div>
+                    <div class="stat-item">
+                        <h3 class="text-warning mb-1">98%</h3>
+                        <small class="text-white">Client Satisfaction</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Services Grid -->
+<div class="container py-5">
+    <!-- Service Categories Tabs -->
+    <div class="text-center mb-5">
+        <h2 class="display-5 fw-bold mb-3">What We Do</h2>
+        <p class="lead text-muted mb-4">Comprehensive construction services for every need</p>
+        
+        <!-- Category Filter -->
+        <!-- <div class="service-filters mb-5">
+            <button class="btn filter-btn active" data-filter="all">All Services</button>
+            <button class="btn filter-btn" data-filter="construction">Construction</button>
+            <button class="btn filter-btn" data-filter="renovation">Renovation</button>
+            <button class="btn filter-btn" data-filter="design">Design</button>
+            <button class="btn filter-btn" data-filter="specialty">Specialty</button>
+        </div> -->
+    </div>
+    
+    <div class="row g-4" id="services-grid">
+        <!-- Service Card 1 - Construction -->
+        <div class="col-xl-4 col-lg-6 service-item" data-category="construction">
+            <div class="service-card h-100">
+                <!-- Image Header -->
+                <div class="card-img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                         class="card-img-top" 
+                         alt="Residential Construction"
+                         loading="lazy">
+                    <div class="img-overlay">
+                        <div class="service-icon-overlay">
+                            <i class="bi bi-house-door-fill text-white"></i>
+                        </div>
+                        <div class="service-badge">Popular</div>
+                    </div>
+                    <div class="price-tag">
+                        <span class="price">From $50,000</span>
+                    </div>
+                </div>
+                
+                <div class="card-body p-4">
+                    <!-- Service Header -->
+                    <div class="service-header mb-3">
+                        <h4 class="card-title fw-bold mb-2">Residential Construction</h4>
+                        <div class="service-rating">
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <span class="rating-text">(4.9/5)</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Description -->
+                    <p class="card-text text-muted mb-3">Complete home construction services from foundation to finishing touches.</p>
+                    
+                    <!-- Key Features -->
+                    <div class="features-grid mb-4">
+                        <h6 class="fw-semibold text-dark mb-3">
+                            <i class="bi bi-check2-circle me-2 text-success"></i>What's Included:
+                        </h6>
+                        <div class="row g-2">
+                            <div class="col-6">
+                                <div class="feature-item">
+                                    <i class="bi bi-check text-success me-1"></i>
+                                    <small>Custom Design</small>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="feature-item">
+                                    <i class="bi bi-check text-success me-1"></i>
+                                    <small>Quality Materials</small>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="feature-item">
+                                    <i class="bi bi-check text-success me-1"></i>
+                                    <small>Timely Completion</small>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="feature-item">
+                                    <i class="bi bi-check text-success me-1"></i>
+                                    <small>90-Year Warranty</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Service Details -->
+                    <div class="service-details mb-4">
+                        <div class="detail-item">
+                            <i class="bi bi-clock text-primary me-2"></i>
+                            <span class="detail-label">Duration:</span>
+                            <span class="detail-value">3-6 months</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="bi bi-shield-check text-success me-2"></i>
+                            <span class="detail-label">Warranty:</span>
+                            <span class="detail-value">90 years</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="bi bi-people text-info me-2"></i>
+                            <span class="detail-label">Team Size:</span>
+                            <span class="detail-value">20-25 experts</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Action Buttons -->
+                    <div class="action-buttons">
+                        <div class="row g-2">
+                            <div class="col-7">
+                                <a href="#" 
+                                   class="btn btn-primary w-100" onclick="showServiceDetails('Residential Construction')">
+                                    <i class="bi bi-info-circle me-1"></i>View Details
+                                </a>
+                            </div>
+                            <div class="col-5">
+                                <div class="btn-group w-100">
+                                    <button class="btn btn-outline-primary dropdown-toggle" 
+                                            type="button" data-bs-toggle="dropdown">
+                                        Contact
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="tel:+917004020921">
+                                            <i class="bi bi-telephone me-2"></i>Call Now</a></li>
+                                        <li><a class="dropdown-item" href="mailto:mehulrajsingh9145@gmail.com">
+                                            <i class="bi bi-envelope me-2"></i>Email</a></li>
+                                        <li><a class="dropdown-item" href="#">
+                                            <i class="bi bi-whatsapp me-2"></i>WhatsApp</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Service Card 2 - Construction -->
+        <div class="col-xl-4 col-lg-6 service-item" data-category="construction">
+            <div class="service-card h-100">
+                <!-- Image Header -->
+                <div class="card-img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                         class="card-img-top" 
+                         alt="Commercial Construction"
+                         loading="lazy">
+                    <div class="img-overlay">
+                        <div class="service-icon-overlay">
+                            <i class="bi bi-building text-white"></i>
+                        </div>
+                        <div class="service-badge">Expert</div>
+                    </div>
+                    <div class="price-tag">
+                        <span class="price">From $100,000</span>
+                    </div>
+                </div>
+                
+                <div class="card-body p-4">
+                    <!-- Service Header -->
+                    <div class="service-header mb-3">
+                        <h4 class="card-title fw-bold mb-2">Commercial Construction</h4>
+                        <div class="service-rating">
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-half text-warning"></i>
+                            <span class="rating-text">(4.8/5)</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Description -->
+                    <p class="card-text text-muted mb-3">Professional commercial building construction for businesses and enterprises.</p>
+                    
+                    <!-- Key Features -->
+                    <div class="features-grid mb-4">
+                        <h6 class="fw-semibold text-dark mb-3">
+                            <i class="bi bi-check2-circle me-2 text-success"></i>What's Included:
+                        </h6>
+                        <div class="row g-2">
+                            <div class="col-6">
+                                <div class="feature-item">
+                                    <i class="bi bi-check text-success me-1"></i>
+                                    <small>Project Management</small>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="feature-item">
+                                    <i class="bi bi-check text-success me-1"></i>
+                                    <small>Commercial Compliance</small>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="feature-item">
+                                    <i class="bi bi-check text-success me-1"></i>
+                                    <small>Timely Delivery</small>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="feature-item">
+                                    <i class="bi bi-check text-success me-1"></i>
+                                    <small>15-Year Warranty</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Service Details -->
+                    <div class="service-details mb-4">
+                        <div class="detail-item">
+                            <i class="bi bi-clock text-primary me-2"></i>
+                            <span class="detail-label">Duration:</span>
+                            <span class="detail-value">6-12 months</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="bi bi-shield-check text-success me-2"></i>
+                            <span class="detail-label">Warranty:</span>
+                            <span class="detail-value">15 years</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="bi bi-people text-info me-2"></i>
+                            <span class="detail-label">Team Size:</span>
+                            <span class="detail-value">20-30 experts</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Action Buttons -->
+                    <div class="action-buttons">
+                        <div class="row g-2">
+                            <div class="col-7">
+                                <a href="#" 
+                                   class="btn btn-primary w-100" onclick="showServiceDetails('Commercial Construction')">
+                                    <i class="bi bi-info-circle me-1"></i>View Details
+                                </a>
+                            </div>
+                            <div class="col-5">
+                                <div class="btn-group w-100">
+                                    <button class="btn btn-outline-primary dropdown-toggle" 
+                                            type="button" data-bs-toggle="dropdown">
+                                        Contact
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="tel:+917004020921">
+                                            <i class="bi bi-telephone me-2"></i>Call Now</a></li>
+                                        <li><a class="dropdown-item" href="mailto:mehulrajsingh9145@gmail.com">
+                                            <i class="bi bi-envelope me-2"></i>Email</a></li>
+                                        <li><a class="dropdown-item" href="#">
+                                            <i class="bi bi-whatsapp me-2"></i>WhatsApp</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Service Card 3 - Renovation -->
+        <div class="col-xl-4 col-lg-6 service-item" data-category="renovation">
+            <div class="service-card h-100">
+                <!-- Image Header -->
+                <div class="card-img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                         class="card-img-top" 
+                         alt="Home Renovation"
+                         loading="lazy">
+                    <div class="img-overlay">
+                        <div class="service-icon-overlay">
+                            <i class="bi bi-hammer text-white"></i>
+                        </div>
+                        <div class="service-badge">Popular</div>
+                    </div>
+                    <div class="price-tag">
+                        <span class="price">From $25,000</span>
+                    </div>
+                </div>
+                
+                <div class="card-body p-4">
+                    <!-- Service Header -->
+                    <div class="service-header mb-3">
+                        <h4 class="card-title fw-bold mb-2">Home Renovation</h4>
+                        <div class="service-rating">
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-half text-warning"></i>
+                            <span class="rating-text">(4.7/5)</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Description -->
+                    <p class="card-text text-muted mb-3">Transform your existing space with our expert renovation services.</p>
+                    
+                    <!-- Key Features -->
+                    <div class="features-grid mb-4">
+                        <h6 class="fw-semibold text-dark mb-3">
+                            <i class="bi bi-check2-circle me-2 text-success"></i>What's Included:
+                        </h6>
+                        <div class="row g-2">
+                            <div class="col-6">
+                                <div class="feature-item">
+                                    <i class="bi bi-check text-success me-1"></i>
+                                    <small>Design Consultation</small>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="feature-item">
+                                    <i class="bi bi-check text-success me-1"></i>
+                                    <small>Quality Materials</small>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="feature-item">
+                                    <i class="bi bi-check text-success me-1"></i>
+                                    <small>Minimal Disruption</small>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="feature-item">
+                                    <i class="bi bi-check text-success me-1"></i>
+                                    <small>5-Year Warranty</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Service Details -->
+                    <div class="service-details mb-4">
+                        <div class="detail-item">
+                            <i class="bi bi-clock text-primary me-2"></i>
+                            <span class="detail-label">Duration:</span>
+                            <span class="detail-value">2-4 weeks</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="bi bi-shield-check text-success me-2"></i>
+                            <span class="detail-label">Warranty:</span>
+                            <span class="detail-value">5 years</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="bi bi-people text-info me-2"></i>
+                            <span class="detail-label">Team Size:</span>
+                            <span class="detail-value">5-8 experts</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Action Buttons -->
+                    <div class="action-buttons">
+                        <div class="row g-2">
+                            <div class="col-7">
+                                <a href="#" 
+                                   class="btn btn-primary w-100" onclick="showServiceDetails('Home Renovation')">
+                                    <i class="bi bi-info-circle me-1"></i>View Details
+                                </a>
+                            </div>
+                            <div class="col-5">
+                                <div class="btn-group w-100">
+                                    <button class="btn btn-outline-primary dropdown-toggle" 
+                                            type="button" data-bs-toggle="dropdown">
+                                        Contact
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="tel:+917004020921">
+                                            <i class="bi bi-telephone me-2"></i>Call Now</a></li>
+                                        <li><a class="dropdown-item" href="mailto:mehulrajsingh9145@gmail.com">
+                                            <i class="bi bi-envelope me-2"></i>Email</a></li>
+                                        <li><a class="dropdown-item" href="#">
+                                            <i class="bi bi-whatsapp me-2"></i>WhatsApp</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Service Card 4 - Renovation -->
+        <div class="col-xl-4 col-lg-6 service-item" data-category="renovation">
+            <div class="service-card h-100">
+                <!-- Image Header -->
+                <div class="card-img-wrapper">
+                    <img src="https://images.pexels.com/photos/2635038/pexels-photo-2635038.jpeg" 
+                         class="card-img-top" 
+                         alt="Kitchen Renovation"
+                         loading="lazy">
+                    <div class="img-overlay">
+                        <div class="service-icon-overlay">
+                            <i class="bi bi-cup-straw text-white"></i>
+                        </div>
+                        <div class="service-badge">Trending</div>
+                    </div>
+                    <div class="price-tag">
+                        <span class="price">From $15,000</span>
+                    </div>
+                </div>
+                
+                <div class="card-body p-4">
+                    <!-- Service Header -->
+                    <div class="service-header mb-3">
+                        <h4 class="card-title fw-bold mb-2">Kitchen Renovation</h4>
+                        <div class="service-rating">
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <span class="rating-text">(4.9/5)</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Description -->
+                    <p class="card-text text-muted mb-3">Modern kitchen transformations with premium materials and smart design.</p>
+                    
+                    <!-- Key Features -->
+                    <div class="features-grid mb-4">
+                        <h6 class="fw-semibold text-dark mb-3">
+                            <i class="bi bi-check2-circle me-2 text-success"></i>What's Included:
+                        </h6>
+                        <div class="row g-2">
+                            <div class="col-6">
+                                <div class="feature-item">
+                                    <i class="bi bi-check text-success me-1"></i>
+                                    <small>Custom Cabinetry</small>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="feature-item">
+                                    <i class="bi bi-check text-success me-1"></i>
+                                    <small>Premium Countertops</small>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="feature-item">
+                                    <i class="bi bi-check text-success me-1"></i>
+                                    <small>Modern Appliances</small>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="feature-item">
+                                    <i class="bi bi-check text-success me-1"></i>
+                                    <small>7-Year Warranty</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Service Details -->
+                    <div class="service-details mb-4">
+                        <div class="detail-item">
+                            <i class="bi bi-clock text-primary me-2"></i>
+                            <span class="detail-label">Duration:</span>
+                            <span class="detail-value">3-5 weeks</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="bi bi-shield-check text-success me-2"></i>
+                            <span class="detail-label">Warranty:</span>
+                            <span class="detail-value">7 years</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="bi bi-people text-info me-2"></i>
+                            <span class="detail-label">Team Size:</span>
+                            <span class="detail-value">4-6 experts</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Action Buttons -->
+                    <div class="action-buttons">
+                        <div class="row g-2">
+                            <div class="col-7">
+                                <a href="#" 
+                                   class="btn btn-primary w-100" onclick="showServiceDetails('Kitchen Renovation')">
+                                    <i class="bi bi-info-circle me-1"></i>View Details
+                                </a>
+                            </div>
+                            <div class="col-5">
+                                <div class="btn-group w-100">
+                                    <button class="btn btn-outline-primary dropdown-toggle" 
+                                            type="button" data-bs-toggle="dropdown">
+                                        Contact
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="tel:+917004020921">
+                                            <i class="bi bi-telephone me-2"></i>Call Now</a></li>
+                                        <li><a class="dropdown-item" href="mailto:mehulrajsingh9145@gmail.com">
+                                            <i class="bi bi-envelope me-2"></i>Email</a></li>
+                                        <li><a class="dropdown-item" href="#">
+                                            <i class="bi bi-whatsapp me-2"></i>WhatsApp</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Service Card 5 - Design -->
+        <div class="col-xl-4 col-lg-6 service-item" data-category="design">
+            <div class="service-card h-100">
+                <!-- Image Header -->
+                <div class="card-img-wrapper">
+                    <img src="https://images.pexels.com/photos/534174/pexels-photo-534174.jpeg" 
+                         class="card-img-top" 
+                         alt="Architectural Design"
+                         loading="lazy">
+                    <div class="img-overlay">
+                        <div class="service-icon-overlay">
+                            <i class="bi bi-pencil-square text-white"></i>
+                        </div>
+                        <div class="service-badge">New</div>
+                    </div>
+                    <div class="price-tag">
+                        <span class="price">From $5,000</span>
+                    </div>
+                </div>
+                
+                <div class="card-body p-4">
+                    <!-- Service Header -->
+                    <div class="service-header mb-3">
+                        <h4 class="card-title fw-bold mb-2">Architectural Design</h4>
+                        <div class="service-rating">
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <span class="rating-text">(5.0/5)</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Description -->
+                    <p class="card-text text-muted mb-3">Custom architectural designs tailored to your vision and requirements.</p>
+                    
+                    <!-- Key Features -->
+                    <div class="features-grid mb-4">
+                        <h6 class="fw-semibold text-dark mb-3">
+                            <i class="bi bi-check2-circle me-2 text-success"></i>What's Included:
+                        </h6>
+                        <div class="row g-2">
+                            <div class="col-6">
+                                <div class="feature-item">
+                                    <i class="bi bi-check text-success me-1"></i>
+                                    <small>3D Visualization</small>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="feature-item">
+                                    <i class="bi bi-check text-success me-1"></i>
+                                    <small>Custom Plans</small>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="feature-item">
+                                    <i class="bi bi-check text-success me-1"></i>
+                                    <small>Permit Assistance</small>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="feature-item">
+                                    <i class="bi bi-check text-success me-1"></i>
+                                    <small>Revisions Included</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Service Details -->
+                    <div class="service-details mb-4">
+                        <div class="detail-item">
+                            <i class="bi bi-clock text-primary me-2"></i>
+                            <span class="detail-label">Duration:</span>
+                            <span class="detail-value">2-6 weeks</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="bi bi-shield-check text-success me-2"></i>
+                            <span class="detail-label">Warranty:</span>
+                            <span class="detail-value">Lifetime Support</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="bi bi-people text-info me-2"></i>
+                            <span class="detail-label">Team Size:</span>
+                            <span class="detail-value">2-3 architects</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Action Buttons -->
+                    <div class="action-buttons">
+                        <div class="row g-2">
+                            <div class="col-7">
+                                <a href="#" 
+                                   class="btn btn-primary w-100" onclick="showServiceDetails('Architectural Design')">
+                                    <i class="bi bi-info-circle me-1"></i>View Details
+                                </a>
+                            </div>
+                            <div class="col-5">
+                                <div class="btn-group w-100">
+                                    <button class="btn btn-outline-primary dropdown-toggle" 
+                                            type="button" data-bs-toggle="dropdown">
+                                        Contact
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="tel:+917004020921">
+                                            <i class="bi bi-telephone me-2"></i>Call Now</a></li>
+                                        <li><a class="dropdown-item" href="mailto:mehulrajsingh9145@gmail.com">
+                                            <i class="bi bi-envelope me-2"></i>Email</a></li>
+                                        <li><a class="dropdown-item" href="#">
+                                            <i class="bi bi-whatsapp me-2"></i>WhatsApp</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Service Card 6 - Specialty -->
+        <div class="col-xl-4 col-lg-6 service-item" data-category="specialty">
+            <div class="service-card h-100">
+                <!-- Image Header -->
+                <div class="card-img-wrapper">
+                    <img src="https://images.pexels.com/photos/7031596/pexels-photo-7031596.jpeg" 
+                         class="card-img-top" 
+                         alt="Green Building"
+                         loading="lazy">
+                    <div class="img-overlay">
+                        <div class="service-icon-overlay">
+                            <i class="bi bi-tree text-white"></i>
+                        </div>
+                        <div class="service-badge">Eco-Friendly</div>
+                    </div>
+                    <div class="price-tag">
+                        <span class="price">From $75,000</span>
+                    </div>
+                </div>
+                
+                <div class="card-body p-4">
+                    <!-- Service Header -->
+                    <div class="service-header mb-3">
+                        <h4 class="card-title fw-bold mb-2">Green Building</h4>
+                        <div class="service-rating">
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <span class="rating-text">(5.0/5)</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Description -->
+                    <p class="card-text text-muted mb-3">Sustainable construction with eco-friendly materials and energy-efficient designs.</p>
+                    
+                    <!-- Key Features -->
+                    <div class="features-grid mb-4">
+                        <h6 class="fw-semibold text-dark mb-3">
+                            <i class="bi bi-check2-circle me-2 text-success"></i>What's Included:
+                        </h6>
+                        <div class="row g-2">
+                            <div class="col-6">
+                                <div class="feature-item">
+                                    <i class="bi bi-check text-success me-1"></i>
+                                    <small>Sustainable Materials</small>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="feature-item">
+                                    <i class="bi bi-check text-success me-1"></i>
+                                    <small>Energy Efficiency</small>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="feature-item">
+                                    <i class="bi bi-check text-success me-1"></i>
+                                    <small>LEED Certification</small>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="feature-item">
+                                    <i class="bi bi-check text-success me-1"></i>
+                                    <small>Tax Benefits</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Service Details -->
+                    <div class="service-details mb-4">
+                        <div class="detail-item">
+                            <i class="bi bi-clock text-primary me-2"></i>
+                            <span class="detail-label">Duration:</span>
+                            <span class="detail-value">4-8 months</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="bi bi-shield-check text-success me-2"></i>
+                            <span class="detail-label">Warranty:</span>
+                            <span class="detail-value">20 years</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="bi bi-people text-info me-2"></i>
+                            <span class="detail-label">Team Size:</span>
+                            <span class="detail-value">15-25 experts</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Action Buttons -->
+                    <div class="action-buttons">
+                        <div class="row g-2">
+                            <div class="col-7">
+                                <a href="#" 
+                                   class="btn btn-primary w-100" onclick="showServiceDetails('Green Building')">
+                                    <i class="bi bi-info-circle me-1"></i>View Details
+                                </a>
+                            </div>
+                            <div class="col-5">
+                                <div class="btn-group w-100">
+                                    <button class="btn btn-outline-primary dropdown-toggle" 
+                                            type="button" data-bs-toggle="dropdown">
+                                        Contact
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="tel:+917004020921">
+                                            <i class="bi bi-telephone me-2"></i>Call Now</a></li>
+                                        <li><a class="dropdown-item" href="mailto:mehulrajsingh9145@gmail.com">
+                                            <i class="bi bi-envelope me-2"></i>Email</a></li>
+                                        <li><a class="dropdown-item" href="#">
+                                            <i class="bi bi-whatsapp me-2"></i>WhatsApp</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- NEW SERVICE CARDS START HERE -->
+
+        <!-- Service Card 7 - Construction -->
+        <div class="col-xl-4 col-lg-6 service-item" data-category="construction">
+            <div class="service-card h-100">
+                <!-- Image Header -->
+                <div class="card-img-wrapper">
+                    <img src="https://images.pexels.com/photos/93400/pexels-photo-93400.jpeg" 
+                         class="card-img-top" 
+                         alt="Industrial Construction"
+                         loading="lazy">
+                    <div class="img-overlay">
+                        <div class="service-icon-overlay">
+                            <i class="bi bi-gear-fill text-white"></i>
+                        </div>
+                        <div class="service-badge">Industrial</div>
+                    </div>
+                    <div class="price-tag">
+                        <span class="price">From $250,000</span>
+                    </div>
+                </div>
+                
+                <div class="card-body p-4">
+                    <!-- Service Header -->
+                    <div class="service-header mb-3">
+                        <h4 class="card-title fw-bold mb-2">Industrial Construction</h4>
+                        <div class="service-rating">
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <span class="rating-text">(4.9/5)</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Description -->
+                    <p class="card-text text-muted mb-3">Specialized construction for industrial facilities, warehouses, and manufacturing plants.</p>
+                    
+                    <!-- Key Features -->
+                    <div class="features-grid mb-4">
+                        <h6 class="fw-semibold text-dark mb-3">
+                            <i class="bi bi-check2-circle me-2 text-success"></i>What's Included:
+                        </h6>
+                        <div class="row g-2">
+                            <div class="col-6">
+                                <div class="feature-item">
+                                    <i class="bi bi-check text-success me-1"></i>
+                                    <small>Heavy Equipment</small>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="feature-item">
+                                    <i class="bi bi-check text-success me-1"></i>
+                                    <small>Safety Compliance</small>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="feature-item">
+                                    <i class="bi bi-check text-success me-1"></i>
+                                    <small>Custom Layouts</small>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="feature-item">
+                                    <i class="bi bi-check text-success me-1"></i>
+                                    <small>20-Year Warranty</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Service Details -->
+                    <div class="service-details mb-4">
+                        <div class="detail-item">
+                            <i class="bi bi-clock text-primary me-2"></i>
+                            <span class="detail-label">Duration:</span>
+                            <span class="detail-value">8-18 months</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="bi bi-shield-check text-success me-2"></i>
+                            <span class="detail-label">Warranty:</span>
+                            <span class="detail-value">20 years</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="bi bi-people text-info me-2"></i>
+                            <span class="detail-label">Team Size:</span>
+                            <span class="detail-value">30-50 experts</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Action Buttons -->
+                    <div class="action-buttons">
+                        <div class="row g-2">
+                            <div class="col-7">
+                                <a href="#" 
+                                   class="btn btn-primary w-100" onclick="showServiceDetails('Industrial Construction')">
+                                    <i class="bi bi-info-circle me-1"></i>View Details
+                                </a>
+                            </div>
+                            <div class="col-5">
+                                <div class="btn-group w-100">
+                                    <button class="btn btn-outline-primary dropdown-toggle" 
+                                            type="button" data-bs-toggle="dropdown">
+                                        Contact
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="tel:+917004020921">
+                                            <i class="bi bi-telephone me-2"></i>Call Now</a></li>
+                                        <li><a class="dropdown-item" href="mailto:mehulrajsingh9145@gmail.com">
+                                            <i class="bi bi-envelope me-2"></i>Email</a></li>
+                                        <li><a class="dropdown-item" href="#">
+                                            <i class="bi bi-whatsapp me-2"></i>WhatsApp</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Service Card 8 - Renovation -->
+        <div class="col-xl-4 col-lg-6 service-item" data-category="renovation">
+            <div class="service-card h-100">
+                <!-- Image Header -->
+                <div class="card-img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                         class="card-img-top" 
+                         alt="Bathroom Renovation"
+                         loading="lazy">
+                    <div class="img-overlay">
+                        <div class="service-icon-overlay">
+                            <i class="bi bi-droplet text-white"></i>
+                        </div>
+                        <div class="service-badge">Luxury</div>
+                    </div>
+                    <div class="price-tag">
+                        <span class="price">From $12,000</span>
+                    </div>
+                </div>
+                
+                <div class="card-body p-4">
+                    <!-- Service Header -->
+                    <div class="service-header mb-3">
+                        <h4 class="card-title fw-bold mb-2">Bathroom Renovation</h4>
+                        <div class="service-rating">
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <span class="rating-text">(4.9/5)</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Description -->
+                    <p class="card-text text-muted mb-3">Transform your bathroom into a luxurious spa-like retreat with premium finishes.</p>
+                    
+                    <!-- Key Features -->
+                    <div class="features-grid mb-4">
+                        <h6 class="fw-semibold text-dark mb-3">
+                            <i class="bi bi-check2-circle me-2 text-success"></i>What's Included:
+                        </h6>
+                        <div class="row g-2">
+                            <div class="col-6">
+                                <div class="feature-item">
+                                    <i class="bi bi-check text-success me-1"></i>
+                                    <small>Custom Tiling</small>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="feature-item">
+                                    <i class="bi bi-check text-success me-1"></i>
+                                    <small>Premium Fixtures</small>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="feature-item">
+                                    <i class="bi bi-check text-success me-1"></i>
+                                    <small>Waterproofing</small>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="feature-item">
+                                    <i class="bi bi-check text-success me-1"></i>
+                                    <small>10-Year Warranty</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Service Details -->
+                    <div class="service-details mb-4">
+                        <div class="detail-item">
+                            <i class="bi bi-clock text-primary me-2"></i>
+                            <span class="detail-label">Duration:</span>
+                            <span class="detail-value">2-4 weeks</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="bi bi-shield-check text-success me-2"></i>
+                            <span class="detail-label">Warranty:</span>
+                            <span class="detail-value">10 years</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="bi bi-people text-info me-2"></i>
+                            <span class="detail-label">Team Size:</span>
+                            <span class="detail-value">3-5 experts</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Action Buttons -->
+                    <div class="action-buttons">
+                        <div class="row g-2">
+                            <div class="col-7">
+                                <a href="#" 
+                                   class="btn btn-primary w-100" onclick="showServiceDetails('Bathroom Renovation')">
+                                    <i class="bi bi-info-circle me-1"></i>View Details
+                                </a>
+                            </div>
+                            <div class="col-5">
+                                <div class="btn-group w-100">
+                                    <button class="btn btn-outline-primary dropdown-toggle" 
+                                            type="button" data-bs-toggle="dropdown">
+                                        Contact
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="tel:+917004020921">
+                                            <i class="bi bi-telephone me-2"></i>Call Now</a></li>
+                                        <li><a class="dropdown-item" href="mailto:mehulrajsingh9145@gmail.com">
+                                            <i class="bi bi-envelope me-2"></i>Email</a></li>
+                                        <li><a class="dropdown-item" href="#">
+                                            <i class="bi bi-whatsapp me-2"></i>WhatsApp</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Service Card 9 - Specialty -->
+        <div class="col-xl-4 col-lg-6 service-item" data-category="specialty">
+            <div class="service-card h-100">
+                <!-- Image Header -->
+                <div class="card-img-wrapper">
+                    <img src="https://images.pexels.com/photos/1216544/pexels-photo-1216544.jpeg" 
+                         class="card-img-top" 
+                         alt="Foundation Repair"
+                         loading="lazy">
+                    <div class="img-overlay">
+                        <div class="service-icon-overlay">
+                            <i class="bi bi-layers text-white"></i>
+                        </div>
+                        <div class="service-badge">Structural</div>
+                    </div>
+                    <div class="price-tag">
+                        <span class="price">From $8,000</span>
+                    </div>
+                </div>
+                
+                <div class="card-body p-4">
+                    <!-- Service Header -->
+                    <div class="service-header mb-3">
+                        <h4 class="card-title fw-bold mb-2">Foundation Repair</h4>
+                        <div class="service-rating">
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-half text-warning"></i>
+                            <span class="rating-text">(4.8/5)</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Description -->
+                    <p class="card-text text-muted mb-3">Expert foundation assessment and repair services to ensure structural integrity.</p>
+                    
+                    <!-- Key Features -->
+                    <div class="features-grid mb-4">
+                        <h6 class="fw-semibold text-dark mb-3">
+                            <i class="bi bi-check2-circle me-2 text-success"></i>What's Included:
+                        </h6>
+                        <div class="row g-2">
+                            <div class="col-6">
+                                <div class="feature-item">
+                                    <i class="bi bi-check text-success me-1"></i>
+                                    <small>Structural Assessment</small>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="feature-item">
+                                    <i class="bi bi-check text-success me-1"></i>
+                                    <small>Crack Repair</small>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="feature-item">
+                                    <i class="bi bi-check text-success me-1"></i>
+                                    <small>Waterproofing</small>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="feature-item">
+                                    <i class="bi bi-check text-success me-1"></i>
+                                    <small>Lifetime Warranty</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Service Details -->
+                    <div class="service-details mb-4">
+                        <div class="detail-item">
+                            <i class="bi bi-clock text-primary me-2"></i>
+                            <span class="detail-label">Duration:</span>
+                            <span class="detail-value">1-3 weeks</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="bi bi-shield-check text-success me-2"></i>
+                            <span class="detail-label">Warranty:</span>
+                            <span class="detail-value">Lifetime</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="bi bi-people text-info me-2"></i>
+                            <span class="detail-label">Team Size:</span>
+                            <span class="detail-value">4-6 specialists</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Action Buttons -->
+                    <div class="action-buttons">
+                        <div class="row g-2">
+                            <div class="col-7">
+                                <a href="#" 
+                                   class="btn btn-primary w-100" onclick="showServiceDetails('Foundation Repair')">
+                                    <i class="bi bi-info-circle me-1"></i>View Details
+                                </a>
+                            </div>
+                            <div class="col-5">
+                                <div class="btn-group w-100">
+                                    <button class="btn btn-outline-primary dropdown-toggle" 
+                                            type="button" data-bs-toggle="dropdown">
+                                        Contact
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="tel:+917004020921">
+                                            <i class="bi bi-telephone me-2"></i>Call Now</a></li>
+                                        <li><a class="dropdown-item" href="mailto:mehulrajsingh9145@gmail.com">
+                                            <i class="bi bi-envelope me-2"></i>Email</a></li>
+                                        <li><a class="dropdown-item" href="#">
+                                            <i class="bi bi-whatsapp me-2"></i>WhatsApp</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Service Card 10 - Design -->
+        <div class="col-xl-4 col-lg-6 service-item" data-category="design">
+            <div class="service-card h-100">
+                <!-- Image Header -->
+                <div class="card-img-wrapper">
+                    <img src="https://images.pexels.com/photos/53464/sheraton-palace-hotel-lobby-architecture-san-francisco-53464.jpeg" 
+                         class="card-img-top" 
+                         alt="Interior Design"
+                         loading="lazy">
+                    <div class="img-overlay">
+                        <div class="service-icon-overlay">
+                            <i class="bi bi-palette text-white"></i>
+                        </div>
+                        <div class="service-badge">Premium</div>
+                    </div>
+                    <div class="price-tag">
+                        <span class="price">From $7,500</span>
+                    </div>
+                </div>
+                
+                <div class="card-body p-4">
+                    <!-- Service Header -->
+                    <div class="service-header mb-3">
+                        <h4 class="card-title fw-bold mb-2">Interior Design</h4>
+                        <div class="service-rating">
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <span class="rating-text">(5.0/5)</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Description -->
+                    <p class="card-text text-muted mb-3">Transform your interiors with custom design solutions that reflect your style.</p>
+                    
+                    <!-- Key Features -->
+                    <div class="features-grid mb-4">
+                        <h6 class="fw-semibold text-dark mb-3">
+                            <i class="bi bi-check2-circle me-2 text-success"></i>What's Included:
+                        </h6>
+                        <div class="row g-2">
+                            <div class="col-6">
+                                <div class="feature-item">
+                                    <i class="bi bi-check text-success me-1"></i>
+                                    <small>Space Planning</small>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="feature-item">
+                                    <i class="bi bi-check text-success me-1"></i>
+                                    <small>Material Selection</small>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="feature-item">
+                                    <i class="bi bi-check text-success me-1"></i>
+                                    <small>Furniture Layout</small>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="feature-item">
+                                    <i class="bi bi-check text-success me-1"></i>
+                                    <small>Color Consultation</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Service Details -->
+                    <div class="service-details mb-4">
+                        <div class="detail-item">
+                            <i class="bi bi-clock text-primary me-2"></i>
+                            <span class="detail-label">Duration:</span>
+                            <span class="detail-value">3-8 weeks</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="bi bi-shield-check text-success me-2"></i>
+                            <span class="detail-label">Warranty:</span>
+                            <span class="detail-value">Design Support</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="bi bi-people text-info me-2"></i>
+                            <span class="detail-label">Team Size:</span>
+                            <span class="detail-value">2-4 designers</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Action Buttons -->
+                    <div class="action-buttons">
+                        <div class="row g-2">
+                            <div class="col-7">
+                                <a href="#" 
+                                   class="btn btn-primary w-100" onclick="showServiceDetails('Interior Design')">
+                                    <i class="bi bi-info-circle me-1"></i>View Details
+                                </a>
+                            </div>
+                            <div class="col-5">
+                                <div class="btn-group w-100">
+                                    <button class="btn btn-outline-primary dropdown-toggle" 
+                                            type="button" data-bs-toggle="dropdown">
+                                        Contact
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="tel:+917004020921">
+                                            <i class="bi bi-telephone me-2"></i>Call Now</a></li>
+                                        <li><a class="dropdown-item" href="mailto:mehulrajsingh9145@gmail.com">
+                                            <i class="bi bi-envelope me-2"></i>Email</a></li>
+                                        <li><a class="dropdown-item" href="#">
+                                            <i class="bi bi-whatsapp me-2"></i>WhatsApp</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Service Card 11 - Construction -->
+        <div class="col-xl-4 col-lg-6 service-item" data-category="construction">
+            <div class="service-card h-100">
+                <!-- Image Header -->
+                <div class="card-img-wrapper">
+                    <img src="https://images.pexels.com/photos/8961401/pexels-photo-8961401.jpeg" 
+                         class="card-img-top" 
+                         alt="Custom Home Building"
+                         loading="lazy">
+                    <div class="img-overlay">
+                        <div class="service-icon-overlay">
+                            <i class="bi bi-house text-white"></i>
+                        </div>
+                        <div class="service-badge">Bespoke</div>
+                    </div>
+                    <div class="price-tag">
+                        <span class="price">From $300,000</span>
+                    </div>
+                </div>
+                
+                <div class="card-body p-4">
+                    <!-- Service Header -->
+                    <div class="service-header mb-3">
+                        <h4 class="card-title fw-bold mb-2">Custom Home Building</h4>
+                        <div class="service-rating">
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <span class="rating-text">(5.0/5)</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Description -->
+                    <p class="card-text text-muted mb-3">Build your dream home from the ground up with personalized design and construction.</p>
+                    
+                    <!-- Key Features -->
+                    <div class="features-grid mb-4">
+                        <h6 class="fw-semibold text-dark mb-3">
+                            <i class="bi bi-check2-circle me-2 text-success"></i>What's Included:
+                        </h6>
+                        <div class="row g-2">
+                            <div class="col-6">
+                                <div class="feature-item">
+                                    <i class="bi bi-check text-success me-1"></i>
+                                    <small>Custom Floor Plans</small>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="feature-item">
+                                    <i class="bi bi-check text-success me-1"></i>
+                                    <small>Premium Materials</small>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="feature-item">
+                                    <i class="bi bi-check text-success me-1"></i>
+                                    <small>Smart Home Integration</small>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="feature-item">
+                                    <i class="bi bi-check text-success me-1"></i>
+                                    <small>25-Year Warranty</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Service Details -->
+                    <div class="service-details mb-4">
+                        <div class="detail-item">
+                            <i class="bi bi-clock text-primary me-2"></i>
+                            <span class="detail-label">Duration:</span>
+                            <span class="detail-value">9-18 months</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="bi bi-shield-check text-success me-2"></i>
+                            <span class="detail-label">Warranty:</span>
+                            <span class="detail-value">25 years</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="bi bi-people text-info me-2"></i>
+                            <span class="detail-label">Team Size:</span>
+                            <span class="detail-value">15-25 experts</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Action Buttons -->
+                    <div class="action-buttons">
+                        <div class="row g-2">
+                            <div class="col-7">
+                                <a href="#" 
+                                   class="btn btn-primary w-100" onclick="showServiceDetails('Custom Home Building')">
+                                    <i class="bi bi-info-circle me-1"></i>View Details
+                                </a>
+                            </div>
+                            <div class="col-5">
+                                <div class="btn-group w-100">
+                                    <button class="btn btn-outline-primary dropdown-toggle" 
+                                            type="button" data-bs-toggle="dropdown">
+                                        Contact
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="tel:+917004020921">
+                                            <i class="bi bi-telephone me-2"></i>Call Now</a></li>
+                                        <li><a class="dropdown-item" href="mailto:mehulrajsingh9145@gmail.com">
+                                            <i class="bi bi-envelope me-2"></i>Email</a></li>
+                                        <li><a class="dropdown-item" href="#">
+                                            <i class="bi bi-whatsapp me-2"></i>WhatsApp</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Service Card 12 - Specialty -->
+        <div class="col-xl-4 col-lg-6 service-item" data-category="specialty">
+            <div class="service-card h-100">
+                <!-- Image Header -->
+                <div class="card-img-wrapper">
+                    <img src="https://images.pexels.com/photos/8200050/pexels-photo-8200050.jpeg" 
+                         class="card-img-top" 
+                         alt="Landscape Construction"
+                         loading="lazy">
+                    <div class="img-overlay">
+                        <div class="service-icon-overlay">
+                            <i class="bi bi-flower1 text-white"></i>
+                        </div>
+                        <div class="service-badge">Outdoor</div>
+                    </div>
+                    <div class="price-tag">
+                        <span class="price">From $20,000</span>
+                    </div>
+                </div>
+                
+                <div class="card-body p-4">
+                    <!-- Service Header -->
+                    <div class="service-header mb-3">
+                        <h4 class="card-title fw-bold mb-2">Landscape Construction</h4>
+                        <div class="service-rating">
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <span class="rating-text">(4.9/5)</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Description -->
+                    <p class="card-text text-muted mb-3">Create stunning outdoor spaces with professional landscape design and construction.</p>
+                    
+                    <!-- Key Features -->
+                    <div class="features-grid mb-4">
+                        <h6 class="fw-semibold text-dark mb-3">
+                            <i class="bi bi-check2-circle me-2 text-success"></i>What's Included:
+                        </h6>
+                        <div class="row g-2">
+                            <div class="col-6">
+                                <div class="feature-item">
+                                    <i class="bi bi-check text-success me-1"></i>
+                                    <small>Hardscape Design</small>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="feature-item">
+                                    <i class="bi bi-check text-success me-1"></i>
+                                    <small>Irrigation Systems</small>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="feature-item">
+                                    <i class="bi bi-check text-success me-1"></i>
+                                    <small>Plant Selection</small>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="feature-item">
+                                    <i class="bi bi-check text-success me-1"></i>
+                                    <small>Lighting Design</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Service Details -->
+                    <div class="service-details mb-4">
+                        <div class="detail-item">
+                            <i class="bi bi-clock text-primary me-2"></i>
+                            <span class="detail-label">Duration:</span>
+                            <span class="detail-value">4-12 weeks</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="bi bi-shield-check text-success me-2"></i>
+                            <span class="detail-label">Warranty:</span>
+                            <span class="detail-value">5 years</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="bi bi-people text-info me-2"></i>
+                            <span class="detail-label">Team Size:</span>
+                            <span class="detail-value">6-10 specialists</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Action Buttons -->
+                    <div class="action-buttons">
+                        <div class="row g-2">
+                            <div class="col-7">
+                                <a href="#" 
+                                   class="btn btn-primary w-100" onclick="showServiceDetails('Landscape Construction')">
+                                    <i class="bi bi-info-circle me-1"></i>View Details
+                                </a>
+                            </div>
+                            <div class="col-5">
+                                <div class="btn-group w-100">
+                                    <button class="btn btn-outline-primary dropdown-toggle" 
+                                            type="button" data-bs-toggle="dropdown">
+                                        Contact
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="tel:+917004020921">
+                                            <i class="bi bi-telephone me-2"></i>Call Now</a></li>
+                                        <li><a class="dropdown-item" href="mailto:mehulrajsingh9145@gmail.com">
+                                            <i class="bi bi-envelope me-2"></i>Email</a></li>
+                                        <li><a class="dropdown-item" href="#">
+                                            <i class="bi bi-whatsapp me-2"></i>WhatsApp</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Additional Services Showcase -->
+<div class="additional-services bg-light py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h3 class="fw-bold mb-3">Additional Services</h3>
+            <p class="text-muted">Comprehensive solutions for all your construction needs</p>
+        </div>
+        
+        <div class="row g-4">
+            <div class="col-md-3 col-sm-6">
+                <div class="additional-service-item">
+                    <div class="service-icon-round mb-3">
+                        <i class="bi bi-pencil-square"></i>
+                    </div>
+                    <h6 class="fw-semibold">3D Planning</h6>
+                    <small class="text-muted">Visualization & Design</small>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="additional-service-item">
+                    <div class="service-icon-round mb-3">
+                        <i class="bi bi-shield-check"></i>
+                    </div>
+                    <h6 class="fw-semibold">Safety Consulting</h6>
+                    <small class="text-muted">OSHA Compliance</small>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="additional-service-item">
+                    <div class="service-icon-round mb-3">
+                        <i class="bi bi-calculator"></i>
+                    </div>
+                    <h6 class="fw-semibold">Cost Estimation</h6>
+                    <small class="text-muted">Accurate Budgeting</small>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="additional-service-item">
+                    <div class="service-icon-round mb-3">
+                        <i class="bi bi-headset"></i>
+                    </div>
+                    <h6 class="fw-semibold">24/7 Support</h6>
+                    <small class="text-muted">Always Available</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Process Section -->
+<div class="process-section py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h3 class="fw-bold mb-3">Our Process</h3>
+            <p class="text-muted">How we bring your vision to life</p>
+        </div>
+        
+        <div class="row g-4">
+            <div class="col-md-3">
+                <div class="process-step">
+                    <div class="step-number">01</div>
+                    <h6 class="fw-semibold mt-3">Consultation</h6>
+                    <p class="text-muted small">We discuss your needs and vision</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="process-step">
+                    <div class="step-number">02</div>
+                    <h6 class="fw-semibold mt-3">Planning</h6>
+                    <p class="text-muted small">Detailed design and project planning</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="process-step">
+                    <div class="step-number">03</div>
+                    <h6 class="fw-semibold mt-3">Execution</h6>
+                    <p class="text-muted small">Professional construction work</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="process-step">
+                    <div class="step-number">04</div>
+                    <h6 class="fw-semibold mt-3">Completion</h6>
+                    <p class="text-muted small">Final inspection and handover</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Testimonials Section -->
+<div class="testimonials-section bg-light py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h3 class="fw-bold mb-3">What Our Clients Say</h3>
+            <p class="text-muted">Real feedback from satisfied customers</p>
+        </div>
+        
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="testimonial-card">
+                    <div class="stars mb-3">
+                        <i class="bi bi-star-fill text-warning"></i>
+                        <i class="bi bi-star-fill text-warning"></i>
+                        <i class="bi bi-star-fill text-warning"></i>
+                        <i class="bi bi-star-fill text-warning"></i>
+                        <i class="bi bi-star-fill text-warning"></i>
+                    </div>
+                    <p class="testimonial-text">"Exceptional quality and professionalism. They transformed our home beyond expectations!"</p>
+                    <div class="testimonial-author">
+                        <strong>Sarah Johnson</strong>
+                        <small class="text-muted d-block">Homeowner</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="testimonial-card">
+                    <div class="stars mb-3">
+                        <i class="bi bi-star-fill text-warning"></i>
+                        <i class="bi bi-star-fill text-warning"></i>
+                        <i class="bi bi-star-fill text-warning"></i>
+                        <i class="bi bi-star-fill text-warning"></i>
+                        <i class="bi bi-star-fill text-warning"></i>
+                    </div>
+                    <p class="testimonial-text">"Professional team, on-time delivery, and excellent communication throughout the project."</p>
+                    <div class="testimonial-author">
+                        <strong>Mike Chen</strong>
+                        <small class="text-muted d-block">Business Owner</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="testimonial-card">
+                    <div class="stars mb-3">
+                        <i class="bi bi-star-fill text-warning"></i>
+                        <i class="bi bi-star-fill text-warning"></i>
+                        <i class="bi bi-star-fill text-warning"></i>
+                        <i class="bi bi-star-fill text-warning"></i>
+                        <i class="bi bi-star-fill text-warning"></i>
+                    </div>
+                    <p class="testimonial-text">"Outstanding craftsmanship and attention to detail. Highly recommend their services!"</p>
+                    <div class="testimonial-author">
+                        <strong>Lisa Rodriguez</strong>
+                        <small class="text-muted d-block">Property Developer</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Enhanced CTA Section -->
+<div class="premium-cta">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                <h3 class="fw-bold text-white mb-3">Ready to Start Your Dream Project?</h3>
+                <p class="text-white-50 mb-4 mb-lg-0">
+                    Get a free consultation with our expert team. We'll help you plan, design, 
+                    and execute your project from start to finish.
+                </p>
+                <div class="cta-features d-flex gap-4 mt-3">
+                    <div class="cta-feature">
+                        <i class="bi bi-check-circle text-warning me-2"></i>
+                        <span class="text-white-50">Free Consultation</span>
+                    </div>
+                    <div class="cta-feature">
+                        <i class="bi bi-check-circle text-warning me-2"></i>
+                        <span class="text-white-50">No Hidden Costs</span>
+                    </div>
+                    <div class="cta-feature">
+                        <i class="bi bi-check-circle text-warning me-2"></i>
+                        <span class="text-white-50">Quick Response</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 text-lg-end">
+                <div class="cta-buttons">
+                    <a href="#" class="btn btn-warning btn-lg px-4 me-2 mb-2" onclick="showContactForm()">
+                        <i class="bi bi-calculator me-2"></i>Free Quote
+                    </a>
+                    <a href="tel:+917004020921" class="btn btn-outline-light btn-lg px-4 mb-2">
+                        <i class="bi bi-telephone me-2"></i>Call Now
+                    </a>
+                </div>
+                <div class="contact-info mt-3">
+                    <small class="text-white-50">Available 24/7 • Response within 1 hour</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Service Filter Functionality - FIXED VERSION
+document.addEventListener('DOMContentLoaded', function() {
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const serviceItems = document.querySelectorAll('.service-item');
+    
+    filterButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            // Remove active class from all buttons
+            filterButtons.forEach(btn => btn.classList.remove('active'));
+            
+            // Add active class to clicked button
+            this.classList.add('active');
+            
+            const filterValue = this.getAttribute('data-filter');
+            
+            // Filter service items
+            serviceItems.forEach(item => {
+                if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
+                    // Show matching items
+                    item.style.display = 'block';
+                    // Force reflow
+                    void item.offsetWidth;
+                    // Add transition
+                    setTimeout(() => {
+                        item.style.opacity = '1';
+                        item.style.transform = 'scale(1)';
+                    }, 10);
+                } else {
+                    // Hide non-matching items
+                    item.style.opacity = '0';
+                    item.style.transform = 'scale(0.8)';
+                    setTimeout(() => {
+                        item.style.display = 'none';
+                    }, 500);
+                }
+            });
+        });
+    });
+});
+
+// Service Details Modal Function
+function showServiceDetails(serviceName) {
+    alert(`Thank you for your interest in our ${serviceName} service!\n\nOur team will contact you shortly with more details.`);
+}
+
+// Contact Form Function
+function showContactForm() {
+    alert('Contact form will be displayed here!\n\nIn a real application, this would open a contact form or redirect to a contact page.');
+}
+
+// Initialize tooltips
+var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+    return new bootstrap.Tooltip(tooltipTriggerEl)
+});
+</script>
+{% endblock %}

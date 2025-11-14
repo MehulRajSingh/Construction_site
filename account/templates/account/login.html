@@ -1,0 +1,550 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Client login Construction Site{% endblock %}
+
+{% block meta %}
+<meta name="description" content="Login to your Construction Site client portal. Access your projects, track progress, and communicate with our team.">
+<meta name="keywords" content="construction login, client portal, project management, construction projects">
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Premium Ultra Mini Login Section */
+    .premium-login-section {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: 
+            radial-gradient(circle at 20% 80%, rgba(255, 215, 0, 0.15) 0%, transparent 50%),
+            radial-gradient(circle at 80% 20%, rgba(255, 107, 53, 0.15) 0%, transparent 50%),
+            radial-gradient(circle at 40% 40%, rgba(255, 140, 0, 0.1) 0%, transparent 50%),
+            linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+        padding: 20px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .premium-login-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: 
+            url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"),
+            linear-gradient(135deg, rgba(255, 140, 0, 0.7) 0%, rgba(255, 107, 53, 0.8) 50%, rgba(255, 215, 0, 0.6) 100%);
+    }
+
+    .premium-login-container {
+        max-width: 340px;
+        width: 100%;
+        margin: 0 auto;
+        position: relative;
+        z-index: 2;
+    }
+
+    .premium-login-card {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(20px);
+        border-radius: 16px;
+        padding: 1.8rem 1.5rem;
+        box-shadow: 
+            0 10px 40px rgba(0, 0, 0, 0.15),
+            0 0 0 1px rgba(255, 255, 255, 0.2),
+            inset 0 0 0 1px rgba(255, 255, 255, 0.4);
+        position: relative;
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .premium-login-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        background: linear-gradient(90deg, #FF8C00, #FF6B35, #FFD700, #FF8C00);
+        background-size: 200% 100%;
+        animation: shimmer 3s linear infinite;
+    }
+
+    .premium-login-card::after {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+        transform: rotate(45deg);
+        animation: shine 6s infinite;
+    }
+
+    .login-header {
+        text-align: center;
+        margin-bottom: 1.5rem;
+        position: relative;
+        z-index: 3;
+    }
+
+    .login-icon {
+        width: 50px;
+        height: 50px;
+        margin: 0 auto 0.8rem;
+        background: linear-gradient(135deg, #FF8C00, #FF6B35);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.3rem;
+        color: white;
+        box-shadow: 
+            0 4px 15px rgba(255, 140, 0, 0.4),
+            inset 0 1px 1px rgba(255, 255, 255, 0.3);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .login-icon::before {
+        content: '';
+        position: absolute;
+        top: -10px;
+        left: -10px;
+        width: 20px;
+        height: 60px;
+        background: rgba(255, 255, 255, 0.3);
+        transform: rotate(45deg);
+        animation: reflect 3s infinite;
+    }
+
+    .login-header h2 {
+        color: #1a365d;
+        font-weight: 800;
+        margin-bottom: 0.2rem;
+        font-size: 1.4rem;
+        letter-spacing: -0.5px;
+    }
+
+    .login-header p {
+        color: #718096;
+        font-size: 0.85rem;
+        margin-bottom: 0;
+        font-weight: 500;
+    }
+
+    /* Form Styles */
+    .premium-form-group {
+        margin-bottom: 1rem;
+        position: relative;
+        z-index: 3;
+    }
+
+    .premium-form-label {
+        display: block;
+        margin-bottom: 0.4rem;
+        color: #2d3748;
+        font-weight: 600;
+        font-size: 0.82rem;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+    }
+
+    .premium-form-control {
+        width: 100%;
+        padding: 10px 14px;
+        border: 1.5px solid #e2e8f0;
+        border-radius: 10px;
+        background: rgba(248, 250, 252, 0.8);
+        font-size: 0.88rem;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        color: #2d3748;
+        font-weight: 500;
+    }
+
+    .premium-form-control:focus {
+        outline: none;
+        border-color: #FF8C00;
+        background: white;
+        box-shadow: 
+            0 0 0 3px rgba(255, 140, 0, 0.15),
+            0 4px 12px rgba(255, 140, 0, 0.1);
+        transform: translateY(-1px);
+    }
+
+    .form-icon {
+        position: absolute;
+        right: 14px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #FF8C00;
+        font-size: 1rem;
+        z-index: 4;
+    }
+
+    /* Login Button */
+    .premium-login-btn {
+        width: 100%;
+        padding: 11px;
+        background: linear-gradient(135deg, #FF8C00, #FF6B35);
+        border: none;
+        border-radius: 10px;
+        color: white;
+        font-weight: 700;
+        font-size: 0.9rem;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        margin-top: 0.6rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        position: relative;
+        overflow: hidden;
+        z-index: 3;
+        letter-spacing: 0.5px;
+        box-shadow: 
+            0 4px 15px rgba(255, 140, 0, 0.4),
+            inset 0 1px 1px rgba(255, 255, 255, 0.2);
+    }
+
+    .premium-login-btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        transition: 0.5s;
+    }
+
+    .premium-login-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 
+            0 6px 20px rgba(255, 140, 0, 0.5),
+            inset 0 1px 1px rgba(255, 255, 255, 0.3);
+        background: linear-gradient(135deg, #FF6B35, #FF8C00);
+    }
+
+    .premium-login-btn:hover::before {
+        left: 100%;
+    }
+
+    /* Alert Styles */
+    .premium-alert {
+        padding: 0.7rem 1rem;
+        border-radius: 10px;
+        margin-bottom: 1rem;
+        font-weight: 600;
+        font-size: 0.8rem;
+        position: relative;
+        z-index: 3;
+        border-left: 4px solid;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    .premium-alert-danger {
+        background: linear-gradient(135deg, #ffe6e6, #ffcccc);
+        color: #d63031;
+        border-left-color: #d63031;
+    }
+
+    /* Premium Feature List */
+    .feature-list {
+        margin-top: 1.2rem;
+        padding: 1rem;
+        background: linear-gradient(135deg, rgba(255, 140, 0, 0.05), rgba(255, 107, 53, 0.05));
+        border-radius: 12px;
+        border: 1px solid rgba(255, 140, 0, 0.1);
+        position: relative;
+        z-index: 3;
+        backdrop-filter: blur(10px);
+    }
+
+    .feature-list::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 4px;
+        height: 100%;
+        background: linear-gradient(to bottom, #FF8C00, #FF6B35);
+        border-radius: 4px 0 0 4px;
+    }
+
+    .feature-list h6 {
+        color: #1a365d;
+        margin-bottom: 0.7rem;
+        font-weight: 700;
+        font-size: 0.85rem;
+        display: flex;
+        align-items: center;
+        letter-spacing: 0.5px;
+    }
+
+    .feature-list ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.3rem;
+    }
+
+    .feature-list li {
+        color: #4a5568;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        font-size: 0.75rem;
+        font-weight: 500;
+        transition: all 0.2s ease;
+    }
+
+    .feature-list li:hover {
+        color: #FF8C00;
+        transform: translateX(2px);
+    }
+
+    .feature-list li i {
+        color: #FF8C00;
+        font-size: 0.7rem;
+        transition: all 0.2s ease;
+    }
+
+    .feature-list li:hover i {
+        transform: scale(1.2);
+    }
+
+    /* Links */
+    .login-links {
+        text-align: center;
+        margin-top: 1.2rem;
+        padding-top: 1rem;
+        border-top: 1px solid rgba(255, 140, 0, 0.15);
+        position: relative;
+        z-index: 3;
+    }
+
+    .login-links p {
+        margin-bottom: 0.5rem;
+        font-size: 0.78rem;
+    }
+
+    .login-links a {
+        color: #FF8C00;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.78rem;
+        transition: all 0.2s ease;
+        position: relative;
+        padding-bottom: 1px;
+    }
+
+    .login-links a::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 0;
+        height: 1px;
+        background: #FF8C00;
+        transition: width 0.3s ease;
+    }
+
+    .login-links a:hover {
+        color: #FF6B35;
+    }
+
+    .login-links a:hover::after {
+        width: 100%;
+    }
+
+    /* Animations */
+    @keyframes shimmer {
+        0% { background-position: -200% 0; }
+        100% { background-position: 200% 0; }
+    }
+
+    @keyframes shine {
+        0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+        80% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+        100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+    }
+
+    @keyframes reflect {
+        0% { transform: translateX(-100px) rotate(45deg); }
+        100% { transform: translateX(100px) rotate(45deg); }
+    }
+
+    .premium-login-card {
+        animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px) scale(0.98);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+    }
+
+    /* Responsive */
+    @media (max-width: 480px) {
+        .premium-login-section {
+            padding: 15px;
+        }
+        
+        .premium-login-card {
+            padding: 1.5rem 1.2rem;
+        }
+        
+        .feature-list ul {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Premium Ultra Mini Login Section -->
+<section class="premium-login-section">
+    <div class="premium-login-container">
+        <div class="premium-login-card">
+            <!-- Login Header -->
+            <div class="login-header">
+                <div class="login-icon">
+                    <i class="bi bi-shield-lock"></i>
+                </div>
+                <h2>Client Login</h2>
+                <p>Access your construction projects</p>
+            </div>
+
+            <!-- Error Messages -->
+            {% if form.errors %}
+                <div class="premium-alert premium-alert-danger">
+                    <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                    Invalid username or password
+                </div>
+            {% endif %}
+
+            <!-- Login Form -->
+            <form method="post">
+                {% csrf_token %}
+                
+                <!-- Username Field -->
+                <div class="premium-form-group">
+                    <label for="id_username" class="premium-form-label">
+                        Username
+                    </label>
+                    <input type="text" 
+                           name="username" 
+                           class="premium-form-control" 
+                           id="id_username" 
+                           placeholder="Enter your username"
+                           required
+                           autofocus>
+                    <i class="bi bi-person form-icon"></i>
+                </div>
+
+                <!-- Password Field -->
+                <div class="premium-form-group">
+                    <label for="id_password" class="premium-form-label">
+                        Password
+                    </label>
+                    <input type="password" 
+                           name="password" 
+                           class="premium-form-control" 
+                           id="id_password" 
+                           placeholder="Enter your password"
+                           required>
+                    <i class="bi bi-lock form-icon"></i>
+                </div>
+
+                <!-- Login Button -->
+                <button type="submit" class="premium-login-btn">
+                    <i class="bi bi-box-arrow-in-right"></i>
+                    Access Portal
+                </button>
+            </form>
+
+            <!-- Premium Feature List -->
+            <div class="feature-list">
+                <h6><i class="bi bi-stars me-2"></i>Portal Features</h6>
+                <ul>
+                    <li><i class="bi bi-graph-up"></i> Project tracking</li>
+                    <li><i class="bi bi-chat-dots"></i> Direct messaging</li>
+                    <li><i class="bi bi-folder"></i> Documents</li>
+                    <li><i class="bi bi-camera"></i> Progress photos</li>
+                    <li><i class="bi bi-clock"></i> Timeline</li>
+                    <li><i class="bi bi-credit-card"></i> Billing</li>
+                </ul>
+            </div>
+
+            <!-- Links -->
+            <div class="login-links">
+                <p>
+                    New client? <a href="/signup/">Create account</a>
+                </p>
+                <p>
+                    <a href="{% url 'home' %}">← Back to Homepage</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const loginForm = document.querySelector('form');
+        
+        if (loginForm) {
+            loginForm.addEventListener('submit', function(e) {
+                const submitButton = this.querySelector('button[type="submit"]');
+                const originalText = submitButton.innerHTML;
+                
+                submitButton.innerHTML = '<i class="bi bi-arrow-repeat spinner"></i> Authenticating...';
+                submitButton.disabled = true;
+                
+                setTimeout(() => {
+                    submitButton.innerHTML = originalText;
+                    submitButton.disabled = false;
+                }, 3000);
+            });
+        }
+
+        // Add floating animation to login icon
+        const loginIcon = document.querySelector('.login-icon');
+        if (loginIcon) {
+            loginIcon.style.animation = 'float 6s ease-in-out infinite';
+        }
+    });
+
+    // Add animations
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-5px); }
+        }
+        
+        .spinner {
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    `;
+    document.head.appendChild(style);
+</script>
+{% endblock %}
